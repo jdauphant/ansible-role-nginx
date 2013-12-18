@@ -1,0 +1,31 @@
+#{{ ansible_managed }}
+{% if ansible_os_family == 'RedHat' %} 
+user              nginx;
+{% endif %}
+{% if ansible_os_family == 'Debian' %} 
+user              www-data;
+{% endif %}
+
+worker_processes  {{ ansible_processor_count }};
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  {{ nginx_max_clients }};
+}
+
+
+http {
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+{% for k,v in nginx_http_params.iteritems() %}
+        {{ k }}  {{ v }};
+{% endfor %}
+
+        gzip on;
+        gzip_disable "msie6";
+
+        include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/sites-enabled/*;
+}

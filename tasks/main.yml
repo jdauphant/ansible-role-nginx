@@ -1,0 +1,52 @@
+---
+
+- name: Install the selinux python module
+  yum: name=libselinux-python state=present
+  when: ansible_os_family == "RedHat"
+
+- name: Copy the epel packages 
+  copy: src=epel.repo dest=/etc/yum.repos.d/epel_ansible.repo
+  when: ansible_os_family == "RedHat"
+
+- name: Install the nginx packages 
+  yum: name={{ item }} state=present
+  with_items: redhat_pkg
+  when: ansible_os_family == "RedHat"
+
+- name: Install the nginx packages 
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: ubuntu_pkg
+  environment: env
+  when: ansible_os_family == "Debian"
+
+- name: Create the directories for site specific configurations
+  file: path=/etc/nginx/{{ item }} state=directory owner=root group=root mode=0755
+  with_items:
+    - "sites-available"
+    - "sites-enabled"
+
+- name: Copy the nginx configuration file 
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: 
+   - restart nginx
+
+- name: Copy the nginx default configuration file 
+  template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
+
+- name: Copy the nginx default site configuration file 
+  template: src=default.j2 dest=/etc/nginx/sites-available/default
+
+
+- name: Create the link for site enabled specific configurations
+  file: path=/etc/nginx/sites-enabled/default state=link src=/etc/nginx/sites-available/default 
+
+- name: Create the configurations for sites
+  template: src=site.j2 dest=/etc/nginx/conf.d/{{ item['server']['file_name'] }}.conf
+  with_items: nginx_sites
+  when: nginx_sites|lower != 'none'
+  notify: 
+   - reload nginx
+
+- name: start the nginx service
+  service: name=nginx state=started enabled=yes
+
