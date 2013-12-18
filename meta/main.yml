@@ -21,6 +21,6 @@ galaxy_info:
       - raring
       - saucy
   categories:
-   - web:nginx
+   - web
 dependencies: []
   
