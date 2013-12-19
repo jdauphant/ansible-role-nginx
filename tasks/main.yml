@@ -36,7 +36,6 @@
 - name: Copy the nginx default site configuration file 
   template: src=default.j2 dest=/etc/nginx/sites-available/default
 
-
 - name: Create the link for site enabled specific configurations
   file: path=/etc/nginx/sites-enabled/default state=link src=/etc/nginx/sites-available/default 
 
