@@ -46,6 +46,11 @@
   notify: 
    - reload nginx
 
-- name: start the nginx service
+- name: Check nginx syntax of configuration files
+   shell: nginx -t
+   register: result
+   changed_when: "result.rc != 0"
+
+- name: Start the nginx service
   service: name=nginx state=started enabled=yes
 
