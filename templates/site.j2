@@ -9,7 +9,7 @@ server {
 {% for k,v in item.server.iteritems() if k.find('location') != -1 %}
   location {{ v.name }} {
 {% for x,y in v.iteritems() if x != 'name' %} 
-      {{ x }} {{ y }};
+      {{ x.rstrip('1234567890') }} {{ y }};
 {% endfor %}
   }
 {% endfor %}
