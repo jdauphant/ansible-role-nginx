@@ -20,12 +20,12 @@ nginx_sites:
     location1: 
        name: /
        vars: 
-          - try_files "$uri $uri/ /index.html"
+          - try_files $uri $uri/ /index.html
           - lol  
     location2:
        name: /images/
        vars:
-          - try_files "$uri $uri/ /index.html"
+          - try_files $uri $uri/ /index.html
  - server:
     file_name: bar
     vars:
@@ -35,13 +35,13 @@ nginx_sites:
     location1: 
        name: /
        vars: 
-          - try_files "$uri $uri/ /index.html"
+          - try_files $uri $uri/ /index.html
           - lol  
     location2:
        name: /images/
        vars:
-          - try_files "$uri $uri/ /index.html"
-          - try_files "$uri $uri/ /index.html"
+          - try_files $uri $uri/ /index.html
+          - try_files $uri $uri/ /index.html
           - allow localhost
           - deny all
 
@@ -49,5 +49,5 @@ nginx_configs:
   - config:
      file_name: proxy
      vars:
-      - proxy_set_header 'X-Real-IP  $remote_addr'
-      - proxy_set_header 'X-Forwarded-For $proxy_add_x_forwarded_for'
+      - proxy_set_header X-Real-IP  $remote_addr
+      - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
