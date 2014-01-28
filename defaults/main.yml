@@ -36,7 +36,6 @@ nginx_sites:
        name: /
        vars: 
           - try_files $uri $uri/ /index.html
-          - lol  
     location2:
        name: /images/
        vars:
