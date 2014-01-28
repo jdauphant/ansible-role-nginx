@@ -7,7 +7,7 @@ server {
 
 {% for k,v in item.server.iteritems() if k.find('location') != -1 %}
   location {{ v.name }} {
-{% for y in v.vars %} 
+{% for y in v.vars %}
       {{ y }};
 {% endfor %}
   }
