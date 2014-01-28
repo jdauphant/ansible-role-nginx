@@ -39,7 +39,7 @@ nginx_sites:
        name: /images/
        vars:
           - try_files $uri $uri/ /index.html
-          - allow localhost
+          - allow 127.0.0.1
           - deny all
 
 nginx_configs:
