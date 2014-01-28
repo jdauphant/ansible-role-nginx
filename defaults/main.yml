@@ -3,31 +3,50 @@
 nginx_max_clients: 512
 
 nginx_http_params:
-  sendfile: "on"
-  tcp_nopush: "on"
-  tcp_nodelay: "on"
-  keepalive_timeout: "65"
-  access_log: "/var/log/nginx/access.log"
-  error_log: "/var/log/nginx/error.log"
+  - sendfile "on"
+  - tcp_nopush "on"
+  - tcp_nodelay "on"
+  - keepalive_timeout "65"
+  - access_log "/var/log/nginx/access.log"
+  - error_log "/var/log/nginx/error.log"
 
 nginx_sites:
  - server:
-    file_name: foo
-    listen: 8080
-    server_name: localhost
-    root: "/tmp/site1"
-    location1: {name: /, try_files: "$uri $uri/ /index.html"}
-    location2: {name: /images/, try_files: "$uri $uri/ /index.html"}
+    vars:
+     - file_name foo
+     - listen 8080
+     - server_name localhost
+     - root "/tmp/site1"
+    location1: 
+       name: /
+       vars: 
+          - try_files "$uri $uri/ /index.html"
+          - lol  
+    location2:
+       name: /images/
+       vars:
+          - try_files "$uri $uri/ /index.html"
  - server:
-    file_name: bar
-    listen: 9090
-    server_name: ansible
-    root: "/tmp/site2"
-    location1: {name: /, try_files: "$uri $uri/ /index.html"}
-    location2: {name: /images/, try_files: "$uri $uri/ /index.html"}
+    vars:
+     - file_name bar
+     - listen 9090
+     - server_name ansible
+     - root "/tmp/site2"
+    location1: 
+       name: /
+       vars: 
+          - try_files "$uri $uri/ /index.html"
+          - lol  
+    location2:
+       name: /images/
+       vars:
+          - try_files "$uri $uri/ /index.html"
+          - try_files "$uri $uri/ /index.html"
+          - allow localhost
+          - deny all
 
 nginx_configs:
   - config:
-     file_name: proxy
-     proxy_set_header: 'X-Real-IP  $remote_addr'
-     proxy_set_header: 'X-Forwarded-For $proxy_add_x_forwarded_for'
+    - file_name proxy
+    - proxy_set_header 'X-Real-IP  $remote_addr'
+    - proxy_set_header 'X-Forwarded-For $proxy_add_x_forwarded_for'

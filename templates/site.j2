@@ -1,16 +1,14 @@
 #{{ ansible_managed }}
 server {
 
-{% for k,v in item.server.iteritems() %}
-{% if k.find('location') == -1 and k != 'file_name' %}
-   {{ k.rstrip('1234567890') }} {{ v }};
-{% endif %}
+{% for v in item.server.vars %}
+   {{ v }};
 {% endfor %} 
 
 {% for k,v in item.server.iteritems() if k.find('location') != -1 %}
   location {{ v.name }} {
-{% for x,y in v.iteritems() if x != 'name' %} 
-      {{ x.rstrip('1234567890') }} {{ y }};
+{% for y in v.vars %} 
+      {{ y }};
 {% endfor %}
   }
 {% endfor %}

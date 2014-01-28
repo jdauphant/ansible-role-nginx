@@ -1,6 +1,4 @@
 #{{ ansible_managed }}
-{% for k,v in item.config.iteritems() %}
-{% if k != 'file_name' %}
-{{ k.rstrip('1234567890') }} {{ v }};
-{% endif %}
+{% for v in item.config.vars %}
+{{ v }};
 {% endfor %} 

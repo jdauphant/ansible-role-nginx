@@ -19,8 +19,8 @@ http {
 
         include /etc/nginx/mime.types;
         default_type application/octet-stream;
-{% for k,v in nginx_http_params.iteritems() %}
-        {{ k }}  {{ v }};
+{% for k,v in nginx_http_params %}
+        {{ v }};
 {% endfor %}
 
         gzip on;
