@@ -40,7 +40,6 @@ nginx_sites:
        name: /images/
        vars:
           - try_files $uri $uri/ /index.html
-          - try_files $uri $uri/ /index.html
           - allow localhost
           - deny all
 
