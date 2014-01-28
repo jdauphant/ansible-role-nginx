@@ -3,54 +3,110 @@
 - name: Install the selinux python module
   yum: name=libselinux-python state=present
   when: ansible_os_family == "RedHat"
+  tags: 
+   - packages
+   - nginx
 
 - name: Copy the epel packages 
   copy: src=epel.repo dest=/etc/yum.repos.d/epel_ansible.repo
   when: ansible_os_family == "RedHat"
+  tags: 
+   - packages
+   - nginx
 
 - name: Install the nginx packages 
   yum: name={{ item }} state=present
   with_items: redhat_pkg
   when: ansible_os_family == "RedHat"
+  tags: 
+   - packages
+   - nginx
 
 - name: Install the nginx packages 
   apt: name={{ item }} state=present update_cache=yes
   with_items: ubuntu_pkg
   environment: env
   when: ansible_os_family == "Debian"
+  tags: 
+   - packages
+   - nginx
 
 - name: Create the directories for site specific configurations
   file: path=/etc/nginx/{{ item }} state=directory owner=root group=root mode=0755
   with_items:
     - "sites-available"
     - "sites-enabled"
+  tags: 
+    - configuration
+    - nginx
 
 - name: Copy the nginx configuration file 
   template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
   notify: 
    - restart nginx
+  tags: 
+    - configuration
+    - nginx
 
 - name: Copy the nginx default configuration file 
   template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
+  tags: 
+    - configuration
+    - nginx
 
 - name: Copy the nginx default site configuration file 
   template: src=default.j2 dest=/etc/nginx/sites-available/default
+  tags: 
+    - configuration
+    - nginx
 
 - name: Create the link for site enabled specific configurations
   file: path=/etc/nginx/sites-enabled/default state=link src=/etc/nginx/sites-available/default 
+  tags: 
+    - configuration
+    - nginx
 
 - name: Create the configurations for sites
-  template: src=site.j2 dest=/etc/nginx/conf.d/{{ item['server']['file_name'] }}.conf
+  template: src=site.j2 dest=/etc/nginx/sites-available/{{ item['server']['file_name'] }}.conf
   with_items: nginx_sites
   when: nginx_sites|lower != 'none'
   notify: 
    - reload nginx
+  tags: 
+    - configuration
+    - nginx
+
+- name: Create links for sites-enabled
+  file: state=link src=/etc/nginx/sites-available/{{ item['server']['file_name'] }}.conf dest=/etc/nginx/sites-enabled/{{ item['server']['file_name'] }}.conf
+  with_items: nginx_sites
+  when: nginx_sites|lower != 'none'
+  notify: 
+   - reload nginx
+  tags: 
+    - configuration
+    - nginx
+
+- name: Create the configurations for independante config file
+  template: src=config.j2 dest=/etc/nginx/conf.d/{{ item['config']['file_name'] }}.conf
+  with_items: nginx_configs
+  when: nginx_configs|lower != 'none'
+  notify: 
+   - reload nginx
+  tags: 
+    - configuration
+    - nginx
 
 - name: Check nginx syntax of configuration files
   shell: nginx -t
   register: result
   changed_when: "result.rc != 0"
+  tags: 
+    - configuration
+    - nginx
 
 - name: Start the nginx service
   service: name=nginx state=started enabled=yes
+  tags: 
+    - configuration
+    - nginx
 
