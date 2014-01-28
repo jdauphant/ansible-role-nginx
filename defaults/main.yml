@@ -12,8 +12,8 @@ nginx_http_params:
 
 nginx_sites:
  - server:
+    file_name: foo
     vars:
-     - file_name foo
      - listen 8080
      - server_name localhost
      - root "/tmp/site1"
@@ -27,8 +27,8 @@ nginx_sites:
        vars:
           - try_files "$uri $uri/ /index.html"
  - server:
+    file_name: bar
     vars:
-     - file_name bar
      - listen 9090
      - server_name ansible
      - root "/tmp/site2"
