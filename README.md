@@ -83,7 +83,7 @@ configured:
     - hosts: all
       roles:
       - {role: nginx,
-         nginx_http_params: ["sendfile on", "access_log /var/log/nginx/access.log",
+         nginx_http_params: ["sendfile on", "access_log /var/log/nginx/access.log"],
                               nginx_sites: none, nginx_configs: none }
 
 
@@ -93,7 +93,7 @@ sites configured.
     - hosts: all
       roles:
       - {role: nginx,
-         nginx_http_params: ["tcp_nodelay on", "error_log /var/log/nginx/error.log",
+         nginx_http_params: ["tcp_nodelay on", "error_log /var/log/nginx/error.log"],
                               nginx_sites: none, 
                               nginx_configs: none }
 
