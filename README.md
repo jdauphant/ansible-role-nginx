@@ -18,7 +18,10 @@ The variables that can be passed to this role and a brief description about
 them are as follows.
 
     # The max clients allowed
-    nginx_max_clients: 512                                
+    nginx_max_clients: 512 
+
+    # The user to run nginx
+    nginx_user: "www-data"
 
     # A list of the http paramters. Note that any
     # valid nginx http paramters can be added here.
