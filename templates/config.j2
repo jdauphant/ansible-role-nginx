@@ -1,4 +1,5 @@
 #{{ ansible_managed }}
+
 {% for v in item.config.vars %}
-{{ v }};
-{% endfor %} 
+   {{ v.replace(";",";\n      ").replace("{","{\n      ").replace("}","\n   }\n") }}{% if v.find('{') == -1%} ;{% endif %} 
+{% endfor %}

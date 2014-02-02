@@ -2,15 +2,7 @@
 server {
 
 {% for v in item.server.vars %}
-   {{ v }};
-{% endfor %} 
+   {{ v.replace(";",";\n      ").replace("{","{\n      ").replace("}","\n   }\n") }}{% if v.find('{') == -1%} ;{% endif %} 
+{% endfor %}
 
-{% for k,v in item.server.iteritems() if k.find('location') != -1 %}
-  location {{ v.name }} {
-{% for y in v.vars %}
-      {{ y }};
-{% endfor %}
-  }
-{% endfor %}
 }
-
