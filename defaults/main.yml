@@ -49,3 +49,8 @@ nginx_configs:
           default 0;
           127.0.0.1 1;
         }
+  - config:
+     file_name: gzip
+     vars:
+      - gzip on
+      - gzip_disable msie6
