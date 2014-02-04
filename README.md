@@ -44,30 +44,20 @@ them are as follows.
            - listen 8080
            - server_name localhost
            - root "/tmp/site1"
-          location1: 
-             name: /
-             vars: 
-                - try_files $uri $uri/ /index.html
-          location2:
-             name: /images/
-             vars:
-                - try_files $uri $uri/ /index.html
+           - location / { try_files $uri $uri/ /index.html; }
+           - location /images/ { try_files $uri $uri/ /index.html; }
        - server:
           file_name: bar
           vars:
            - listen 9090
            - server_name ansible
            - root "/tmp/site2"
-          location1: 
-             name: /
-             vars: 
-                - try_files $uri $uri/ /index.html
-          location2:
-             name: /images/
-             vars:
-                - try_files $uri $uri/ /index.html
-                - allow 127.0.0.1
-                - deny all
+           - location / { try_files $uri $uri/ /index.html; }
+           - location /images/ {
+               try_files $uri $uri/ /index.html;
+               allow 127.0.0.1;
+               deny all;
+             }
 
     # A list of hashs that define additional configuration
     nginx_configs:
@@ -76,6 +66,17 @@ them are as follows.
          vars:
           - proxy_set_header X-Real-IP  $remote_addr
           - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+      - config:
+         file_name: upstream
+         vars:
+          - upstream foo { server 127.0.0.1:8080 weight=10; }
+      - config:
+         file_name: geo
+         vars:
+          - geo $local {
+              default 0;
+              127.0.0.1 1;
+            }
 
 Examples
 ========
@@ -118,8 +119,8 @@ for details.
              file_name: bar
              vars:
               - listen 8080
-             location1: {name: "/", vars; ["try_files $uri $uri/ /index.html"]}
-             location2: {name: /images/, vars; ["try_files $uri $uri/ /index.html"]}
+              - location / { try_files $uri $uri/ /index.html; }
+              - location /images/ { try_files $uri $uri/ /index.html; }
         nginx_configs:
            - config:
                file_name: proxy
@@ -132,9 +133,7 @@ generated are populated in /etc/nginx/site-available/, a link is from /etc/nginx
 
 The file name for the specific site configurtaion is specified in the hash
 with the key "file_name", any valid server directives can be added to hash.
-For location directive add the key "location" suffixed by a unique number, the
-value for the location is hash, please make sure they are valid location
-directives. Additional configuration are created in /etc/nginx/conf.d/
+Additional configuration are created in /etc/nginx/conf.d/
 
 4) Install Nginx , add 2 sites (different method) and add additional configuration
 
@@ -152,22 +151,64 @@ directives. Additional configuration are created in /etc/nginx/conf.d/
                - listen 8080
                - server_name localhost
                - root /tmp/site1
-              location1: {name: "/", vars; ["try_files $uri $uri/ /index.html"]}
-              location2: {name: /images/, vars; ["try_files $uri $uri/ /index.html"]}
+               - location / { try_files $uri $uri/ /index.html; }
+               - location /images/ { try_files $uri $uri/ /index.html; }
            - server:
               file_name: bar
               vars:
                - listen 9090
                - server_name ansible
                - root /tmp/site2
-              location1: {name: "/", vars; ["try_files $uri $uri/ /index.html"]}
-              location2: {name: /images/, vars; ["try_files $uri $uri/ /index.html"]}
+               - location / { try_files $uri $uri/ /index.html; }
+               - location /images/ { try_files $uri $uri/ /index.html; }
           nginx_configs:
            - config:
                file_name: proxy
                vars:
                 - proxy_set_header X-Real-IP  $remote_addr
                 - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+
+5) Install Nginx , add 2 sites, add additional configuration and an upstream configuration block
+
+    ---
+    - hosts: all
+      roles:
+        - role: nginx
+          nginx_http_params:
+            sendfile: "on"
+            access_log: "/var/log/nginx/access.log"
+          nginx_sites:
+           - server:
+              file_name: foo
+              vars:
+               - listen 8080
+               - server_name localhost
+               - root /tmp/site1
+               - location / { try_files $uri $uri/ /index.html; }
+               - location /images/ { try_files $uri $uri/ /index.html; }
+           - server:
+              file_name: bar
+              vars:
+               - listen 9090
+               - server_name ansible
+               - root /tmp/site2
+               - if ( $host = example.com ) { rewrite ^(.*)$ http://www.example.com$1 permanent; }
+               - location / { try_files $uri $uri/ /index.html; }
+               - location /images/ { try_files $uri $uri/ /index.html; }
+          nginx_configs:
+           - config:
+               file_name: proxy
+               vars:
+                - proxy_set_header X-Real-IP  $remote_addr
+                - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+            - config:
+                # Results in:
+                # upstream foo_backend {
+                #   server 127.0.0.1:8080 weight=10
+                # }
+                file_name: upstream
+                vars:
+                 - upstream foo_backend { server 127.0.0.1:8080 weight=10; }
 
 Dependencies
 ------------
