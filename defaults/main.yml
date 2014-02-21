@@ -1,5 +1,6 @@
 ---
 
+nginx_worker_processes: "{{ ansible_processor_vcpus }}"
 nginx_max_clients: 512
 
 nginx_http_params:
