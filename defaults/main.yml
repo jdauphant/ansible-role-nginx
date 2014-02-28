@@ -1,7 +1,9 @@
 ---
+nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
 
 nginx_worker_processes: "{{ ansible_processor_vcpus }}"
 nginx_max_clients: 512
+nginx_worker_rlimit_nofile: 1024
 
 nginx_http_params:
   - sendfile "on"

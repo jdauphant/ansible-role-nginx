@@ -1,15 +1,9 @@
 #{{ ansible_managed }}
-{% if nginx_user is defined %}
 user              {{ nginx_user }};
-{% elif ansible_os_family == 'RedHat' %}
-user              nginx;
-{% elif ansible_os_family == 'Debian' %}
-user              www-data;
-{% endif %}
 
 worker_processes  {{ nginx_worker_processes }};
 pid        /var/run/nginx.pid;
-
+worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
 events {
     worker_connections  {{ nginx_max_clients }};
