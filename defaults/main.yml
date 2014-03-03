@@ -1,5 +1,6 @@
 ---
 nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
+nginx_group: "{{nginx_user}}"
 
 nginx_worker_processes: "{{ ansible_processor_vcpus }}"
 nginx_max_clients: 512
@@ -33,3 +34,5 @@ nginx_configs:
      vars:
       - gzip on
       - gzip_disable msie6
+
+nginx_auth_basic_files: {}

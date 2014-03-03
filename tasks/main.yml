@@ -24,10 +24,11 @@
   tags: [packages,nginx]
 
 - name: Create the directories for site specific configurations
-  file: path=/etc/nginx/{{ item }} state=directory owner=root group=root mode=0755
+  file: path=/etc/nginx/{{ item }} state=directory owner=root group={{nginx_group}} mode=0750
   with_items:
     - "sites-available"
     - "sites-enabled"
+    - "auth_basic"
   tags: [configuration,nginx]
 
 - name: Copy the nginx configuration file 
@@ -36,16 +37,9 @@
    - restart nginx
   tags: [configuration,nginx]
 
-- name: Copy the nginx default configuration file 
-  template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
-  tags: [configuration,nginx]
-
-- name: Copy the nginx default site configuration file 
-  template: src=default.j2 dest=/etc/nginx/sites-available/default
-  tags: [configuration,nginx]
-
-- name: Create the link for site enabled specific configurations
-  file: path=/etc/nginx/sites-enabled/default state=link src=/etc/nginx/sites-available/default 
+- name: Ensure auth_basic files created
+  template: src=auth_basic.j2 dest=/etc/nginx/auth_basic/{{ item }}
+  with_items: nginx_auth_basic_files.keys()
   tags: [configuration,nginx]
 
 - name: Create the configurations for sites
@@ -81,4 +75,3 @@
 - name: Start the nginx service
   service: name=nginx state=started enabled=yes
   tags: [service,nginx]
-
