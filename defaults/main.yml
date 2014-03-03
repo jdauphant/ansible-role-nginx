@@ -15,23 +15,17 @@ nginx_http_params:
   - error_log "/var/log/nginx/error.log"
 
 nginx_sites:
- - server:
-    file_name: default
-    vars:
+  default:
      - listen 80
      - server_name _
      - root "/usr/share/nginx/html"
      - index index.html
 
 nginx_configs: 
-  - config:
-     file_name: proxy
-     vars:
+  proxy:
       - proxy_set_header X-Real-IP  $remote_addr
       - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
-  - config:
-     file_name: gzip
-     vars:
+  gzip:
       - gzip on
       - gzip_disable msie6
 

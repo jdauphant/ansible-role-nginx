@@ -24,7 +24,7 @@
   tags: [packages,nginx]
 
 - name: Create the directories for site specific configurations
-  file: path=/etc/nginx/{{ item }} state=directory owner=root group={{nginx_group}} mode=0750
+  file: path=/etc/nginx/{{ item }} state=directory owner=root group={{nginx_group}} mode=0755
   with_items:
     - "sites-available"
     - "sites-enabled"
@@ -38,30 +38,27 @@
   tags: [configuration,nginx]
 
 - name: Ensure auth_basic files created
-  template: src=auth_basic.j2 dest=/etc/nginx/auth_basic/{{ item }}
+  template: src=auth_basic.j2 dest=/etc/nginx/auth_basic/{{ item }} owner=root group={{nginx_group}} mode=0750
   with_items: nginx_auth_basic_files.keys()
   tags: [configuration,nginx]
 
 - name: Create the configurations for sites
-  template: src=site.j2 dest=/etc/nginx/sites-available/{{ item['server']['file_name'] }}.conf
-  with_items: nginx_sites
-  when: nginx_sites|lower != 'none'
+  template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ item }}.conf
+  with_items: nginx_sites.keys()
   notify: 
    - reload nginx
   tags: [configuration,nginx]
 
 - name: Create links for sites-enabled
-  file: state=link src=/etc/nginx/sites-available/{{ item['server']['file_name'] }}.conf dest=/etc/nginx/sites-enabled/{{ item['server']['file_name'] }}.conf
-  with_items: nginx_sites
-  when: nginx_sites|lower != 'none'
+  file: state=link src=/etc/nginx/sites-available/{{ item }}.conf dest=/etc/nginx/sites-enabled/{{ item }}.conf
+  with_items: nginx_sites.keys()
   notify: 
    - reload nginx
   tags: [configuration,nginx]
 
 - name: Create the configurations for independante config file
-  template: src=config.j2 dest=/etc/nginx/conf.d/{{ item['config']['file_name'] }}.conf
-  with_items: nginx_configs
-  when: nginx_configs|lower != 'none'
+  template: src=config.conf.j2 dest=/etc/nginx/conf.d/{{ item }}.conf
+  with_items: nginx_configs.keys()
   notify: 
    - reload nginx
   tags: [configuration,nginx]

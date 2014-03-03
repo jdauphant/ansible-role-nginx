@@ -1,8 +1,5 @@
 #{{ ansible_managed }}
-server {
 
-{% for v in item.server.vars %}
+{% for v in nginx_configs[item] %}
    {{ v.replace(";",";\n      ").replace("{","{\n      ").replace("}","\n   }\n") }}{% if v.find('{') == -1%} ;{% endif %} 
 {% endfor %}
-
-}

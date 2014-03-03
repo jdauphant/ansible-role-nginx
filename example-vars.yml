@@ -1,23 +1,17 @@
 ---
 nginx_sites:
- - server:
-    file_name: default
-    vars:
+ default:
      - listen 80
      - server_name _
      - root "/usr/share/nginx/html"
      - index index.html
- - server:
-    file_name: foo
-    vars:
+ foo:
      - listen 8080
      - server_name localhost
      - root "/tmp/site1"
      - location / { try_files $uri $uri/ /index.html; }
      - location /images/ { try_files $uri $uri/ /index.html; }
- - server:
-    file_name: bar
-    vars:
+ bar:
      - listen 9090
      - server_name ansible
      - root "/tmp/site2"
@@ -29,25 +23,17 @@ nginx_sites:
        }
 
 nginx_configs:
-  - config:
-     file_name: proxy
-     vars:
+  proxy:
       - proxy_set_header X-Real-IP  $remote_addr
       - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
-  - config:
-     file_name: upstream
-     vars:
+  upstream:
       - upstream foo { server 127.0.0.1:8080 weight=10; }
-  - config:
-     file_name: geo
-     vars:
+  geo:
       - geo $local {
           default 0;
           127.0.0.1 1;
         }
-  - config:
-     file_name: gzip
-     vars:
+  gzip:
       - gzip on
       - gzip_disable msie6
 
