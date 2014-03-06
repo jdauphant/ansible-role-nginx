@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: "Benno Joy"
+  author: "Benno Joy, DAUPHANT Julien"
   company: AnsibleWorks
   license: BSD
   min_ansible_version: 1.4

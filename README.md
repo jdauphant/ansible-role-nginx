@@ -206,6 +206,6 @@ BSD
 Author Information
 ------------------
 
-Original : Benno Joy
-Modified by : DAUPHANT Julien
+- Original : Benno Joy
+- Modified by : DAUPHANT Julien
 
