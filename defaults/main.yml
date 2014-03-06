@@ -21,12 +21,6 @@ nginx_sites:
      - root "/usr/share/nginx/html"
      - index index.html
 
-nginx_configs: 
-  proxy:
-      - proxy_set_header X-Real-IP  $remote_addr
-      - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
-  gzip:
-      - gzip on
-      - gzip_disable msie6
+nginx_configs: {}
 
 nginx_auth_basic_files: {}
