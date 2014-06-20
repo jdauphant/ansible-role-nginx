@@ -14,6 +14,7 @@ nginx_http_params:
   - keepalive_timeout "65"
   - access_log "{{nginx_log_dir}}/access.log"
   - error_log "{{nginx_log_dir}}/error.log"
+  - server_tokens off
 
 nginx_sites:
   default:
