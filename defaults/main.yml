@@ -1,4 +1,7 @@
 ---
+yum_epel_repo: epel
+yum_base_repo: base
+
 nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
 nginx_group: "{{nginx_user}}"
 
