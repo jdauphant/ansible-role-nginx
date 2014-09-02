@@ -11,11 +11,13 @@ script:
   - echo localhost > inventory
   - ansible-playbook -i inventory --syntax-check --list-tasks test.yml
   - ansible-playbook -i inventory --connection=local --sudo -vvvv test.yml
-  - cat /etc/nginx/sites-enabled/foo
-  - cat /etc/nginx/sites-enabled/bar
-  - cat /etc/nginx/conf.d/proxy
-  - cat /etc/nginx/conf.d/upstream 
+  - cat /etc/nginx/nginx.conf
+  - cat /etc/nginx/sites-enabled/foo.conf
+  - cat /etc/nginx/sites-enabled/bar.conf
+  - cat /etc/nginx/conf.d/proxy.conf
+  - cat /etc/nginx/conf.d/upstream.conf
   - cat /etc/nginx/auth_basic/demo
 after_script:
+  - ls /etc/nginx/auth_basic/
   - ls /etc/nginx/conf.d/
-  - ls /etc/nginx/sites-enabled
+  - ls /etc/nginx/sites-enabled/
