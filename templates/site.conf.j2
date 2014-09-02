@@ -2,7 +2,8 @@
 server {
 
 {% for v in nginx_sites[item] %}
-   {% if v != "" %}{{ v.replace(";",";\n      ").replace("{","{\n      ").replace("}","\n   }\n") }}{% if v.find('{') == -1%};{% endif %}{% endif %} 
+   {% if v != "" %}{{ v.replace(";",";\n      ").replace(" {"," {\n      ").replace(" }"," \n   }\n") }}{% if v.find('{') == -1%};
+{% endif %}{% endif %}
 {% endfor %}
 
 }
