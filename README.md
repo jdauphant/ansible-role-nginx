@@ -132,8 +132,8 @@ Additional configuration are created in /etc/nginx/conf.d/
       roles:
         - role: nginx
           nginx_http_params:
-            sendfile: "on"
-            access_log: "/var/log/nginx/access.log"
+            - sendfile on
+            - access_log /var/log/nginx/access.log
           nginx_sites:
              foo:
                - listen 8080
@@ -159,8 +159,8 @@ Additional configuration are created in /etc/nginx/conf.d/
       roles:
         - role: nginx
           nginx_http_params:
-            sendfile: "on"
-            access_log: "/var/log/nginx/access.log"
+            - sendfile on
+            - access_log /var/log/nginx/access.log
           nginx_sites:
             foo:
                - listen 8080
