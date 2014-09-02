@@ -6,7 +6,16 @@ before_install:
  - sudo apt-get install -qq python-apt python-pycurl
 install:
   - pip install ansible
+  - ansible --version
 script:
   - echo localhost > inventory
-  - ansible-playbook --syntax-check -i inventory test.yml
-  - ansible-playbook -i inventory test.yml --connection=local --sudo -vvvv
+  - ansible-playbook -i inventory --syntax-check --list-tasks test.yml
+  - ansible-playbook -i inventory --connection=local --sudo -vvvv test.yml
+  - cat /etc/nginx/sites-enabled/foo
+  - cat /etc/nginx/sites-enabled/bar
+  - cat /etc/nginx/conf.d/proxy
+  - cat /etc/nginx/conf.d/upstream 
+  - cat /etc/nginx/auth_basic/demo
+after_script:
+  - ls /etc/nginx/conf.d/
+  - ls /etc/nginx/sites-enabled
