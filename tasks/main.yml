@@ -60,21 +60,6 @@
    - reload nginx
   tags: [configuration,nginx]
 
-- name: Find enabled sites
-  shell: ls -1 /etc/nginx/sites-enabled
-  register: enabled_sites
-  changed_when: False
-  tags: [configuration,nginx]
-
-- name: Disable unmanaged sites
-  file: path=/etc/nginx/sites-enabled/{{ item }} state=absent
-  with_items: enabled_sites.stdout_lines
-  # 'item.conf' => 'item'
-  when: item[:-5] not in nginx_sites.keys()
-  notify:
-   - reload nginx
-  tags: [configuration,nginx]
-
 - name: Create the configurations for independent config file
   template: src=config.conf.j2 dest=/etc/nginx/conf.d/{{ item }}.conf
   with_items: nginx_configs.keys()
@@ -82,27 +67,8 @@
    - reload nginx
   tags: [configuration,nginx]
 
-- name: Find config files
-  shell: ls -1 /etc/nginx/conf.d
-  register: config_files
-  changed_when: False
-  tags: [configuration,nginx]
-
-- name: Remove unmanaged config files
-  file: name=/etc/nginx/conf.d/{{ item }} state=absent
-  with_items: config_files.stdout_lines
-  # 'item.conf' => 'item'
-  when: item[:-5] not in nginx_configs.keys()
-  notify:
-   - reload nginx
-  tags: [configuration,nginx]
-
-- name: Check nginx syntax of configuration files
-  shell: nginx -t
-  register: result
-  changed_when: "result.rc != 0"
-  always_run: yes
-  tags: [configuration,nginx]
+- include: remove-extras.yml
+  when: keep_only_specified
 
 - name: Start the nginx service
   service: name=nginx state=started enabled=yes
