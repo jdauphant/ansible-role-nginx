@@ -29,10 +29,3 @@
    - reload nginx
   tags: [configuration,nginx]
 
-- name: Check nginx syntax of configuration files
-  shell: nginx -t
-  register: result
-  changed_when: "result.rc != 0"
-  always_run: yes
-  tags: [configuration,nginx]
-
