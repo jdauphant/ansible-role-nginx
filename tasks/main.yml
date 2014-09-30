@@ -60,19 +60,18 @@
    - reload nginx
   tags: [configuration,nginx]
 
-- name: Disable the default site
-  file: path=/etc/nginx/sites-enabled/default state=absent
-  when: nginx_sites.keys() != []
-  notify:
-   - reload nginx
-  tags: [configuration,nginx]
-
 - name: Create the configurations for independent config file
   template: src=config.conf.j2 dest=/etc/nginx/conf.d/{{ item }}.conf
   with_items: nginx_configs.keys()
   notify:
    - reload nginx
   tags: [configuration,nginx]
+
+- include: remove-defaults.yml
+  when: not keep_only_specified
+
+- include: remove-extras.yml
+  when: keep_only_specified
 
 - name: Check nginx syntax of configuration files
   shell: nginx -t
