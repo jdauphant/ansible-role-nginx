@@ -50,14 +50,14 @@
   template: src=site.conf.j2 dest=/etc/nginx/sites-available/{{ item }}.conf
   with_items: nginx_sites.keys()
   notify: 
-   - reload nginx
+   - restart nginx
   tags: [configuration,nginx]
 
 - name: Create links for sites-enabled
   file: state=link src=/etc/nginx/sites-available/{{ item }}.conf dest=/etc/nginx/sites-enabled/{{ item }}.conf
   with_items: nginx_sites.keys()
   notify: 
-   - reload nginx
+   - restart nginx
   tags: [configuration,nginx]
 
 - name: Disable the default site
