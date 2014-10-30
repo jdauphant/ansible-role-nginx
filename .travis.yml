@@ -9,7 +9,7 @@ install:
   - ansible --version
 script:
   - echo localhost > inventory
-  - ansible-playbook -i inventory --syntax-check --list-tasks test.yml
+  - ansible-playbook -i inventory --syntax-check --list-tasks test.yml -e "role_name=ansible-role-nginx" -e "hosts_group=hosts_group"
   - ansible-playbook -i inventory --connection=local --sudo -vvvv test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=hosts_group"
   - cat /etc/nginx/nginx.conf
   - cat /etc/nginx/sites-enabled/default.conf
