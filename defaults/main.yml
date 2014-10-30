@@ -15,6 +15,7 @@ nginx_http_params:
   - access_log "{{nginx_log_dir}}/access.log"
   - error_log "{{nginx_log_dir}}/error.log"
   - server_tokens off
+  - types_hash_max_size 2048
 
 nginx_sites:
   default:
