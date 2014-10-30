@@ -1,7 +1,6 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: "{{hosts_group|default('all')}}"
   vars_files:
     - 'example-vars.yml'
   roles:
-    - ansible-role-nginx
+    - "{{role_name|default('nginx')}}"

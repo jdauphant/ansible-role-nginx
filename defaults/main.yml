@@ -4,6 +4,9 @@ yum_base_repo: base
 
 keep_only_specified: False
 
+nginx_installation_type: "packages"
+nginx_conf_dir: "/etc/nginx"
+
 nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
 nginx_group: "{{nginx_user}}"
 

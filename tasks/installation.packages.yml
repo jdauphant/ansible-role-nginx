@@ -1,0 +1,23 @@
+---
+- name: Install the selinux python module
+  yum: name=libselinux-python state=present
+  when: ansible_os_family == "RedHat"
+  tags: [packages,nginx]
+
+- name: Copy the epel packages
+  template: src=epel.repo.j2 dest=/etc/yum.repos.d/epel_ansible.repo
+  when: ansible_os_family == "RedHat"
+  tags: [packages,nginx]
+
+- name: Install the nginx packages
+  yum: name={{ item }} state=present disablerepo='*' enablerepo={{ yum_epel_repo }},{{ yum_base_repo }}
+  with_items: redhat_pkg
+  when: ansible_os_family == "RedHat"
+  tags: [packages,nginx]
+
+- name: Install the nginx packages
+  apt: name={{ item }} state=present update_cache=yes
+  with_items: ubuntu_pkg
+  environment: env
+  when: ansible_os_family == "Debian"
+  tags: [packages,nginx]
