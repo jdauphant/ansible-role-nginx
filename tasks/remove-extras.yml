@@ -1,12 +1,12 @@
 ---
 - name: Find enabled sites
-  shell: ls -1 /etc/nginx/sites-enabled
+  shell: ls -1 {{nginx_conf_dir}}/sites-enabled
   register: enabled_sites
   changed_when: False
   tags: [configuration,nginx]
 
 - name: Disable unmanaged sites
-  file: path=/etc/nginx/sites-enabled/{{ item }} state=absent
+  file: path={{nginx_conf_dir}}/sites-enabled/{{ item }} state=absent
   with_items: enabled_sites.stdout_lines
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_sites.keys()
@@ -15,13 +15,13 @@
   tags: [configuration,nginx]
 
 - name: Find config files
-  shell: ls -1 /etc/nginx/conf.d
+  shell: ls -1 {{nginx_conf_dir}}/conf.d
   register: config_files
   changed_when: False
   tags: [configuration,nginx]
 
 - name: Remove unmanaged config files
-  file: name=/etc/nginx/conf.d/{{ item }} state=absent
+  file: name={{nginx_conf_dir}}/conf.d/{{ item }} state=absent
   with_items: config_files.stdout_lines
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_configs.keys()

@@ -1,6 +1,6 @@
 ---
 - name: Disable the default site
-  file: path=/etc/nginx/sites-enabled/default state=absent
+  file: path={{nginx_conf_dir}}/sites-enabled/default state=absent
   when: >
     'default' not in nginx_sites.keys()
   notify:
@@ -8,7 +8,7 @@
   tags: [configuration,nginx]
 
 - name: Remove the default configuration
-  file: path=/etc/nginx/conf.d/default.conf state=absent
+  file: path={{nginx_conf_dir}}/conf.d/default.conf state=absent
   when: >
     'default' not in nginx_configs.keys()
   notify:
