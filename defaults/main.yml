@@ -2,6 +2,8 @@
 yum_epel_repo: epel
 yum_base_repo: base
 
+is_el: "{{ ansible_distribution in ['RedHat', 'CentOS'] }}"
+
 keep_only_specified: False
 
 nginx_installation_type: "packages"
