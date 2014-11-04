@@ -5,6 +5,7 @@
     - "sites-available"
     - "sites-enabled"
     - "auth_basic"
+    - "conf.d"
   tags: [configuration,nginx]
 
 - name: Ensure log directory exist
