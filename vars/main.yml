@@ -3,10 +3,10 @@
 env:
  RUNLEVEL: 1
 
-redhat_pkg:
+nginx_redhat_pkg:
   - nginx
 
-ubuntu_pkg:
+nginx_ubuntu_pkg:
   - python-selinux
   - nginx
 
