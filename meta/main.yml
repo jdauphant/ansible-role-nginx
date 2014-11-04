@@ -14,6 +14,8 @@ galaxy_info:
       - 16
       - 17
       - 18
+      - 19
+      - 20
    - name: Ubuntu
      versions:
       - precise
@@ -23,4 +25,4 @@ galaxy_info:
   categories:
    - web
 dependencies: []
-  
+
