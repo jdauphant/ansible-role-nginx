@@ -22,6 +22,7 @@ galaxy_info:
       - quantal
       - raring
       - saucy
+      - trusty
   categories:
    - web
 dependencies: []
