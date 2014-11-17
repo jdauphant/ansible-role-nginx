@@ -11,19 +11,19 @@
 
 - name: Install the nginx packages
   yum: name={{ item }} state=present disablerepo='*' enablerepo={{ yum_epel_repo }},{{ yum_base_repo }}
-  with_items: redhat_pkg
+  with_items: nginx_redhat_pkg
   when:  nginx_is_el|bool
   tags: [packages,nginx]
 
 - name: Install the nginx packages
   yum: name={{ item }} state=present
-  with_items: redhat_pkg
+  with_items: nginx_redhat_pkg
   when: ansible_os_family == "RedHat" and not nginx_is_el|bool
   tags: [packages,nginx]
 
 - name: Install the nginx packages
   apt: name={{ item }} state=present update_cache=yes
-  with_items: ubuntu_pkg
+  with_items: nginx_ubuntu_pkg
   environment: env
   when: ansible_os_family == "Debian"
   tags: [packages,nginx]

@@ -1,4 +1,11 @@
 ---
+nginx_redhat_pkg:
+  - nginx
+
+nginx_ubuntu_pkg:
+  - python-selinux
+  - nginx
+
 yum_epel_repo: epel
 yum_base_repo: base
 
