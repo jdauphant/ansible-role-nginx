@@ -3,13 +3,6 @@
 env:
  RUNLEVEL: 1
 
-redhat_pkg:
-  - nginx
-
-ubuntu_pkg:
-  - python-selinux
-  - nginx
-
 nginx_installation_types_using_service: ["packages"]
 
 nginx_is_el: "{{ ansible_distribution in ['RedHat', 'CentOS'] }}"
