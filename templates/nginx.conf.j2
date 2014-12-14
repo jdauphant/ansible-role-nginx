@@ -1,7 +1,7 @@
 #{{ ansible_managed }}
 user              {{ nginx_user }};
 
-worker_processes  {{ nginx_worker_processes }};
+worker_processes  {{ nginx_worker_processes | default('auto') }};
 pid        /var/run/nginx.pid;
 worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
