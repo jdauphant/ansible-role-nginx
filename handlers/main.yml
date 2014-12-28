@@ -5,4 +5,4 @@
 
 - name: reload nginx
   service: name=nginx state=reloaded
-  when: nginx_installation_type in nginx_installation_types_using_service
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode
