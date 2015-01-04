@@ -20,7 +20,6 @@ script:
   - cat /etc/nginx/conf.d/geo.conf
   - cat /etc/nginx/conf.d/gzip.conf
   - sudo cat /etc/nginx/auth_basic/demo
-  - nginx -t
   - sudo nginx -t
 after_script:
   - ls /etc/nginx/auth_basic/
