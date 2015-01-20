@@ -104,7 +104,7 @@ for details.
     - hosts: all
 
       roles:
-      - role: nginx,
+      - role: nginx
         nginx_http_params:
           - sendfile "on"
           - access_log "/var/log/nginx/access.log"
