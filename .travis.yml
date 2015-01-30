@@ -15,6 +15,8 @@ script:
   - cat /etc/nginx/sites-enabled/default.conf
   - cat /etc/nginx/sites-enabled/foo.conf
   - cat /etc/nginx/sites-enabled/bar.conf
+  - cat /etc/nginx/snippets/php-fpm.conf
+  - cat /etc/nginx/snippets/hhvm.conf
   - cat /etc/nginx/conf.d/proxy.conf
   - cat /etc/nginx/conf.d/upstream.conf
   - cat /etc/nginx/conf.d/geo.conf
@@ -25,3 +27,4 @@ after_script:
   - ls /etc/nginx/auth_basic/
   - ls /etc/nginx/conf.d/
   - ls /etc/nginx/sites-enabled/
+  - ls /etc/nginx/snippets/

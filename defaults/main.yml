@@ -41,6 +41,7 @@ nginx_sites:
 nginx_remove_sites: []
 
 nginx_configs: {}
+nginx_snippets: {}
 nginx_remove_configs: []
 
 nginx_auth_basic_files: {}
