@@ -28,3 +28,4 @@ after_script:
   - ls /etc/nginx/conf.d/
   - ls /etc/nginx/sites-enabled/
   - ls /etc/nginx/snippets/
+  - ls /etc/nginx/ssl/

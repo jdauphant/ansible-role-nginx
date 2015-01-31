@@ -7,6 +7,7 @@
     - "auth_basic"
     - "conf.d"
     - "snippets"
+    - "ssl"
   tags: [configuration,nginx]
 
 - name: Ensure log directory exist
