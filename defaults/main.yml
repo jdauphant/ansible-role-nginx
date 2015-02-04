@@ -41,6 +41,8 @@ nginx_sites:
 nginx_remove_sites: []
 
 nginx_configs: {}
+nginx_ssl_files: {}
+nginx_ssl_dir: "{{nginx_conf_dir}}/ssl"
 nginx_remove_configs: []
 
 nginx_auth_basic_files: {}
