@@ -1,6 +1,8 @@
 ---
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
+- include: installation.from_nginx.yml
+  when: nginx_installation_type == "packages_from_nginx" and ansible_os_family == "Debian"
 - include: remove-defaults.yml
   when: not keep_only_specified
 - include: remove-extras.yml
