@@ -6,6 +6,8 @@
     - "sites-enabled"
     - "auth_basic"
     - "conf.d"
+    - "snippets"
+    - "ssl"
   tags: [configuration,nginx]
 
 - name: Ensure log directory exist
@@ -40,6 +42,13 @@
 - name: Create the configurations for independent config file
   template: src=config.conf.j2 dest={{nginx_conf_dir}}/conf.d/{{ item }}.conf
   with_items: nginx_configs.keys()
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+
+- name: Create the snippets for independent snippet file
+  template: src=snippet.conf.j2 dest={{nginx_conf_dir}}/snippets/{{ item }}.conf
+  with_items: nginx_snippets.keys()
   notify:
    - reload nginx
   tags: [configuration,nginx]
