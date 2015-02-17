@@ -4,8 +4,8 @@
   when: ansible_os_family == "RedHat"
   tags: [packages,nginx]
 
-- name: Copy the epel packages
-  template: src=epel.repo.j2 dest=/etc/yum.repos.d/epel_ansible.repo
+- name: Install the epel packages
+  yum: name=epel-release state=present
   when: nginx_is_el|bool
   tags: [packages,nginx]
 
