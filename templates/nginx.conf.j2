@@ -22,4 +22,6 @@ http {
         include /etc/nginx/sites-enabled/*;
 }
 
-daemon {% if nginx_daemon_mode %} on {% else %} off {% endif %};
+{% if nginx_daemon_mode == "off" %}
+daemon off;
+{% endif %}
