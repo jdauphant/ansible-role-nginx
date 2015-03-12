@@ -1,6 +1,6 @@
 ---
 - include: nginx-official-repo.yml
-  when: nginx_official_repo == True and ansible_os_family == "Debian"
+  when: nginx_official_repo == True
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
 - include: remove-defaults.yml
