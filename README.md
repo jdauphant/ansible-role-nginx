@@ -202,7 +202,7 @@ Additional configuration are created in /etc/nginx/conf.d/
 ```
 
 6) Example to use this role with my ssl-certs role to generate or copie ssl certificate ( https://galaxy.ansible.com/list#/roles/3115 )
-```
+```yaml
  - hosts: all
    roles: 
      - jdauphant.ssl-certs
