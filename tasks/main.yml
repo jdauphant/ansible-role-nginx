@@ -12,5 +12,5 @@
 
 - name: Start the nginx service
   service: name=nginx state=started enabled=yes
-  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode and nginx_manage_service
   tags: [service,nginx]
