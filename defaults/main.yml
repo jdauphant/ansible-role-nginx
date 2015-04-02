@@ -13,6 +13,8 @@ nginx_official_repo: False
 
 keep_only_specified: False
 
+nginx_manage_service: True
+
 nginx_installation_type: "packages"
 nginx_conf_dir: "/etc/nginx"
 
