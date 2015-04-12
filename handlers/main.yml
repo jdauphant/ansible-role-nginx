@@ -1,8 +1,8 @@
 ---
 - name: restart nginx
   service: name=nginx state=restarted 
-  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
 
 - name: reload nginx
   service: name=nginx state=reloaded
-  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
