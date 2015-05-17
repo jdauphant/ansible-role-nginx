@@ -14,6 +14,8 @@ nginx_official_repo: False
 keep_only_specified: False
 
 nginx_installation_type: "packages"
+nginx_binary_name: "nginx"
+nginx_service_name: "{{nginx_binary_name}}"
 nginx_conf_dir: "/etc/nginx"
 
 nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
