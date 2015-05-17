@@ -45,7 +45,7 @@
   tags: [configuration,nginx]
 
 - name: Check nginx syntax of configuration files
-  shell: nginx -t
+  shell: "{{ nginx_binary_name }} -t"
   register: result
   changed_when: "result.rc != 0"
   always_run: yes
