@@ -18,11 +18,15 @@ The variables that can be passed to this role and a brief description about
 them are as follows.
 
 ```yaml
-# The max clients allowed
-nginx_max_clients: 512 
-
 # The user to run nginx
 nginx_user: "www-data"
+
+# A list of directives for the events section.
+nginx_events_params:
+ - worker_connections 512
+ - debug_connection 127.0.0.1
+ - use epoll
+ - multi_accept on
 
 # A list of hashs that define the servers for nginx,
 # as with http parameters. Any valid server parameters

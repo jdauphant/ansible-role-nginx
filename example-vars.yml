@@ -1,7 +1,4 @@
 ---
-# The max clients allowed
-nginx_max_clients: 512 
-
 # The user to run nginx
 nginx_user: "www-data"
 
@@ -15,6 +12,10 @@ nginx_hhvm: |
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include       fastcgi_params;
       }
+
+# A list of directives for the events section.
+nginx_events_params:
+  - worker_connections 512
 
 # A list of hashs that define the servers for nginx,
 # as with http parameters. Any valid server parameters

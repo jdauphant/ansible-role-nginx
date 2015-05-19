@@ -10,7 +10,9 @@ pid        {{ nginx_pid_file }};
 worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
 events {
-    worker_connections  {{ nginx_max_clients }};
+{% for v in nginx_events_params %}
+        {{ v }};
+{% endfor %}
 }
 
 
