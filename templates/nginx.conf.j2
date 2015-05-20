@@ -3,7 +3,7 @@ user              {{ nginx_user }}  {{ nginx_group }};
 
 worker_processes  {{ nginx_worker_processes }};
 
-{% if nginx_pid_file %}
+{% if nginx_pid_file is defined %}
 pid        {{ nginx_pid_file }};
 {% endif %}
 
