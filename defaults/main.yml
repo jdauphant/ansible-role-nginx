@@ -28,7 +28,7 @@ nginx_worker_rlimit_nofile: 1024
 nginx_log_dir: "/var/log/nginx"
 
 nginx_events_params:
-  - worker_connections {% if nginx_max_clients %}{{nginx_max_clients}}{% else %}512{% endif %}
+  - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}
 
 nginx_http_params:
   - sendfile "on"
