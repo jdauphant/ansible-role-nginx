@@ -23,7 +23,7 @@
     state: present
     disablerepo: '*'
     enablerepo: "{{ \"nginx,\" if nginx_official_repo else \"\" }}{{ yum_epel_repo }},{{ yum_base_repo }}"
-  with_items: nginx_redhat_pkg
+  with_items: nginx_packages
   when:  nginx_is_el|bool
   tags:
     - packages
@@ -33,7 +33,7 @@
   yum:
     name: "{{ item }}"
     state: present
-  with_items: nginx_redhat_pkg
+  with_items: nginx_packages
   when: ansible_os_family == "RedHat" and not nginx_is_el|bool
   tags:
     - packages
@@ -43,7 +43,7 @@
   apt:
     name: "{{ item }}"
     state: present
-  with_items: nginx_ubuntu_pkg
+  with_items: nginx_packages
   environment: env
   when: ansible_os_family == "Debian"
   tags:
