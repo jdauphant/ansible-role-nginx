@@ -1,3 +1,4 @@
 ---
 nginx_installation_types_using_service:
   - "packages"
+nginx_official_repository_state: "{% if nginx_official_repo %}present{% else %}absent{% endif %}"

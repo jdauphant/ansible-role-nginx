@@ -2,7 +2,6 @@
 - include_vars: "{{ ansible_os_family }}.yml"
 
 - include: nginx-official-repo.yml
-  when: nginx_official_repo == True
 
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
