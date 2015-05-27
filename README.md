@@ -11,6 +11,8 @@ Requirements
 This role requires Ansible 1.4 or higher and platform requirements are listed
 in the metadata file.
 
+You need EPEL to be setup before running this role.
+
 Role Variables
 --------------
 

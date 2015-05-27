@@ -1,0 +1,7 @@
+---
+nginx_packages:
+  - python-selinux
+  - nginx
+
+nginx_user: 'www-data'
+nginx_group: 'www-data'
