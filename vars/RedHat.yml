@@ -4,6 +4,3 @@ nginx_packages:
 
 nginx_user: 'nginx'
 nginx_group: 'nginx'
-
-yum_epel_repo: 'epel'
-yum_base_repo: 'base'
