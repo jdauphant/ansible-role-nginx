@@ -10,7 +10,7 @@
 - name: Ensure APT official nginx repository
   apt_repository:
     repo: "deb http://nginx.org/packages/{{ ansible_distribution|lower }}/{{ ansible_distribution_release }} nginx"
-    state: "{{ nginx_official_repository_state }}"
+    state: "{% if nginx_official_repo %}present{% else %}absent{% endif %}"
   tags:
     - packages
     - nginx
@@ -25,7 +25,6 @@
   template:
     src: nginx.repo.j2
     dest: /etc/yum.repos.d/nginx.repo
-    state: "{{ nginx_official_repository_state }}"
   when: ansible_os_family == 'RedHat' and nginx_official_repo
 
 - name: Ensure YUM official nginx repository is absent
