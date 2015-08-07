@@ -3,6 +3,13 @@
   when: nginx_official_repo == True
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
+
+- name: Setup nginx user's groups
+  user:
+    name: "{{nginx_user}}"
+    group: "{{nginx_group}}"
+    groups: "{{nginx_groups}}"
+
 - include: remove-defaults.yml
   when: not keep_only_specified
 - include: remove-extras.yml
