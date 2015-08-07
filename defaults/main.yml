@@ -27,6 +27,9 @@ nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% e
 nginx_user: "{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Suse' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
+# Any additional groups the nginx user should be added to
+nginx_groups: ""
+
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
 
 nginx_worker_processes: "{% if ansible_processor_vcpus is defined %}{{ ansible_processor_vcpus }}{% else %}auto{% endif %}"
