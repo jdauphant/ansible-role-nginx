@@ -6,6 +6,9 @@ nginx_ubuntu_pkg:
   - python-selinux
   - nginx
 
+nginx_freebsd_pkg:
+  - nginx
+
 yum_epel_repo: epel
 yum_base_repo: base
 
@@ -18,7 +21,7 @@ nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
 nginx_conf_dir: "/etc/nginx"
 
-nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
+nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
