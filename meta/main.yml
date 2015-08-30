@@ -22,6 +22,9 @@ galaxy_info:
       - raring
       - saucy
       - trusty
+   - name: FreeBSD
+     versions:
+      - 10.1
   categories:
    - web
 dependencies: []
