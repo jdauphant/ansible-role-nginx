@@ -6,6 +6,9 @@ nginx_ubuntu_pkg:
   - python-selinux
   - nginx
 
+nginx_freebsd_pkg:
+  - nginx
+
 yum_epel_repo: epel
 yum_base_repo: base
 
@@ -16,9 +19,9 @@ keep_only_specified: False
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
-nginx_conf_dir: "/etc/nginx"
+nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% else %}/etc/nginx{% endif %}"
 
-nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% endif %}"
+nginx_user: "{% if ansible_os_family == 'RedHat' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
@@ -44,7 +47,7 @@ nginx_sites:
   default:
      - listen 80 default_server
      - server_name _
-     - root "/usr/share/nginx/html"
+     - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
      - index index.html
 nginx_remove_sites: []
 
