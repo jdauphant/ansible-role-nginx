@@ -1,6 +1,6 @@
 ---
 
-env:
+nginx_env:
  RUNLEVEL: 1
 
 nginx_installation_types_using_service: ["packages"]
