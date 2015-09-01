@@ -24,7 +24,7 @@ galaxy_info:
       - trusty
    - name: FreeBSD
      versions:
-      - 10.1
+      - 10
   categories:
    - web
 dependencies: []
