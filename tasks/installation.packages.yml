@@ -24,14 +24,14 @@
 - name: Install the nginx packages
   apt: name={{ item }} state=present
   with_items: nginx_ubuntu_pkg
-  environment: env
+  environment: nginx_env
   when: ansible_os_family == "Debian"
   tags: [packages,nginx]
 
 - name: Install the nginx packages
   pkgng: name={{ item }} state=present
   with_items: nginx_freebsd_pkg
-  environment: env
+  environment: nginx_env
   when: ansible_os_family == "FreeBSD"
   tags: [packages,nginx]
 
