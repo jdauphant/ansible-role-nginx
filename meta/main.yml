@@ -27,5 +27,6 @@ galaxy_info:
       - 10
   categories:
    - web
+allow_duplicates: yes
 dependencies: []
 
