@@ -9,7 +9,7 @@
   file: path={{nginx_conf_dir}}/sites-enabled/{{ item }} state=absent
   with_items: enabled_sites.stdout_lines
   # 'item.conf' => 'item'
-  when: item[:-5] not in nginx_sites.keys()
+  when: item[:-5] not in nginx_sites.keys() and item[:-5] not in nginx_default_sites.keys()
   notify:
    - reload nginx
   tags: [configuration,nginx]

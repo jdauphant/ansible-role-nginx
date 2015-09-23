@@ -49,12 +49,12 @@ nginx_http_params:
   - server_tokens off
   - types_hash_max_size 2048
 
-nginx_sites:
-  default:
-     - listen 80 default_server
-     - server_name _
-     - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
-     - index index.html
+# nginx_sites is used to install one or more particular vhosts.
+# nginx_defaults_sites is used to always install one or more particular vhosts,
+# no matter what else is getting installed
+nginx_sites: {}
+nginx_default_sites: {}
+
 nginx_remove_sites: []
 
 nginx_configs: {}
