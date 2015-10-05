@@ -1,8 +1,31 @@
 ---
+
 - name: restart nginx
-  service: name={{ nginx_service_name }} state=restarted
-  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
+  debug: msg="checking config first"
+  changed_when: True
+  notify:
+    - check nginx configuration
+    - really restart nginx
 
 - name: reload nginx
+  debug: msg="checking config first"
+  changed_when: True
+  notify:
+    - check nginx configuration
+    - really reload nginx
+
+- name: check nginx configuration
+  shell: "{{ nginx_binary_name }} -t"
+  register: result
+  changed_when: "result.rc != 0"
+  always_run: yes
+  when: nginx_installation_type in nginx_installation_types_using_service
+  tags: [configuration,nginx]
+
+- name: really reload nginx
   service: name={{ nginx_service_name }} state=reloaded
+  when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
+
+- name: really restart nginx
+  service: name={{ nginx_service_name }} state=restarted
   when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
