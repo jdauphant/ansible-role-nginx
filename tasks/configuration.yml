@@ -51,6 +51,20 @@
    - reload nginx
   tags: [configuration,nginx]
 
+- name: Create extra dir
+  file:
+    path: "{{nginx_conf_dir}}/extra"
+    state: directory
+
+- name: Create extra files
+  copy:
+    dest: "{{nginx_conf_dir}}/extra/{{item.key}}"
+    content: "{{item.value}}"
+  with_dict: nginx_extra_files
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+
 - name: Check nginx syntax of configuration files
   shell: "{{ nginx_binary_name }} -t"
   register: result

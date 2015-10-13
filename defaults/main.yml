@@ -58,3 +58,7 @@ nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []
 
 nginx_daemon_mode: "on"
+
+# dict of file names to their contents. The file names will be prefixed with
+# {{nginx_conf_dir}}/extra
+nginx_extra_files: {}
