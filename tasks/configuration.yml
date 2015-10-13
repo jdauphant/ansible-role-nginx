@@ -37,3 +37,25 @@
   notify:
    - reload nginx
   tags: [configuration,nginx]
+
+- name: Create extra dir
+  file:
+    path: "{{nginx_conf_dir}}/extra"
+    state: directory
+
+- name: Create extra files
+  copy:
+    dest: "{{nginx_conf_dir}}/extra/{{item.key}}"
+    content: "{{item.value}}"
+  with_dict: "{{ nginx_extra_files }}"
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+
+- name: Check nginx syntax of configuration files
+  shell: "{{ nginx_binary_name }} -t"
+  register: result
+  changed_when: "result.rc != 0"
+  always_run: yes
+  when: nginx_installation_type in nginx_installation_types_using_service
+  tags: [configuration,nginx]
