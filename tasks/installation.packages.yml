@@ -35,3 +35,8 @@
   when: ansible_os_family == "FreeBSD"
   tags: [packages,nginx]
 
+- name: Install the nginx packages
+  zypper: name={{ item }} state=present 
+  with_items: nginx_suse_pkg
+  when: ansible_os_family == "Suse"
+  tags: [packages,nginx]
