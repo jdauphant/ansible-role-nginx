@@ -15,8 +15,8 @@ galaxy_info:
       - 18
       - 19
       - 20
-  - name: opensuse
-    versions:
+   - name: opensuse
+     versions:
       - 13.1
       - 13.2
    - name: Ubuntu
