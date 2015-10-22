@@ -5,14 +5,14 @@
   changed_when: True
   notify:
     - check nginx configuration
-    - really restart nginx
+    - restart nginx - after config check
 
 - name: reload nginx
   debug: msg="checking config first"
   changed_when: True
   notify:
     - check nginx configuration
-    - really reload nginx
+    - reload nginx - after config check
 
 - name: check nginx configuration
   shell: "{{ nginx_binary_name }} -t"
@@ -20,12 +20,11 @@
   changed_when: "result.rc != 0"
   always_run: yes
   when: nginx_installation_type in nginx_installation_types_using_service
-  tags: [configuration,nginx]
 
-- name: really restart nginx
+- name: restart nginx - after config check
   service: name={{ nginx_service_name }} state=restarted
   when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
 
-- name: really reload nginx
+- name: reload nginx - after config check
   service: name={{ nginx_service_name }} state=reloaded
   when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"
