@@ -21,6 +21,7 @@
 
 - name: Generate safer Diffie Hellman Params
   command: sudo openssl dhparam -out {{nginx_conf_dir}}/dhparams.pem 2048 creates={{nginx_conf_dir}}/dhparams.pem
+  when: nginx_ssl_crt and nginx_ssl_key is defined
   tags: [configuration,nginx]
 
 - name: Ensure auth_basic files created
