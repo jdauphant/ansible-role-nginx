@@ -6,6 +6,7 @@
     - "sites-enabled"
     - "auth_basic"
     - "conf.d"
+    - "ssl"
   tags: [configuration,nginx]
 
 - name: Ensure log directory exist
@@ -18,9 +19,34 @@
    - restart nginx
   tags: [configuration,nginx]
 
+- name: Generate safer Diffie Hellman Params
+  command: sudo openssl dhparam -out {{nginx_conf_dir}}/dhparams.pem 2048 creates={{nginx_conf_dir}}/dhparams.pem
+  when: nginx_ssl_crt and nginx_ssl_key is defined
+  tags: [configuration,nginx]
+
 - name: Ensure auth_basic files created
   template: src=auth_basic.j2 dest={{nginx_conf_dir}}/auth_basic/{{ item }} owner=root group={{nginx_group}} mode=0750
   with_items: nginx_auth_basic_files.keys()
+  tags: [configuration,nginx]
+
+- name: Create SSL certificate keys
+  copy:
+    content: "{{ nginx_ssl_key[item] }}"
+    dest: "{{nginx_conf_dir}}/ssl/{{ item }}.key"
+    owner: root
+    mode: 0600
+  with_items: nginx_ssl_key.keys()
+  when: nginx_ssl_crt and nginx_ssl_key is defined
+  tags: [configuration,nginx]
+
+- name: Create SSL certificates
+  copy:
+     content: "{{ nginx_ssl_crt[item] }}"
+     dest: "{{nginx_conf_dir}}/ssl/{{ item }}.crt"
+     owner: root
+     mode: 0600
+  with_items: nginx_ssl_crt.keys()
+  when: nginx_ssl_crt and nginx_ssl_key is defined
   tags: [configuration,nginx]
 
 - name: Create the configurations for sites
