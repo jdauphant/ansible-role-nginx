@@ -18,6 +18,10 @@
    - restart nginx
   tags: [configuration,nginx]
 
+- name: Generate safer Diffie Hellman Params
+  command: sudo openssl dhparam -out {{nginx_conf_dir}}/dhparams.pem 2048 creates={{nginx_conf_dir}}/dhparams.pem
+  tags: [configuration,nginx]
+
 - name: Ensure auth_basic files created
   template: src=auth_basic.j2 dest={{nginx_conf_dir}}/auth_basic/{{ item }} owner=root group={{nginx_group}} mode=0750
   with_items: nginx_auth_basic_files.keys()
