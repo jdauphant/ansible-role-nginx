@@ -6,6 +6,7 @@
     - "sites-enabled"
     - "auth_basic"
     - "conf.d"
+    - "access"
   tags: [configuration,nginx]
 
 - name: Ensure log directory exist
@@ -21,6 +22,11 @@
 - name: Ensure auth_basic files created
   template: src=auth_basic.j2 dest={{nginx_conf_dir}}/auth_basic/{{ item }} owner=root group={{nginx_group}} mode=0750
   with_items: nginx_auth_basic_files.keys()
+  tags: [configuration,nginx]
+
+- name: Ensure access files created
+  template: src=access.j2 dest={{nginx_conf_dir}}/access/{{ item }}.conf
+  with_items: nginx_access_files.keys()
   tags: [configuration,nginx]
 
 - name: Create the configurations for sites
