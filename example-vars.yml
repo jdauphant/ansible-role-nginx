@@ -35,7 +35,7 @@ nginx_sites:
      - server_name localhost
      - root "/tmp/site1"
      - location / { try_files $uri $uri/ /index.html;
-         include access/foo
+         include access/foo;
        }
      - location /images/ { try_files $uri $uri/ /index.html; }
  bar:
@@ -82,4 +82,4 @@ nginx_auth_basic_files:
 # A list of hashs that define access rules
 nginx_access_files:
    foo:
-     - allow from all
+     - allow all
