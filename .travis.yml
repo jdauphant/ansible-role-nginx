@@ -25,7 +25,7 @@ script:
   - cat /etc/nginx/conf.d/geo.conf
   - cat /etc/nginx/conf.d/gzip.conf
   - sudo cat /etc/nginx/auth_basic/demo
-  - cat /etc/nginx/access/foo.conf
+  - cat /etc/nginx/access/foo
   - sudo nginx -t
 after_script:
   - ls /etc/nginx/auth_basic/

@@ -25,7 +25,7 @@
   tags: [configuration,nginx]
 
 - name: Ensure access files created
-  template: src=access.j2 dest={{nginx_conf_dir}}/access/{{ item }}.conf
+  template: src=access.j2 dest={{nginx_conf_dir}}/access/{{ item }}
   with_items: nginx_access_files.keys()
   tags: [configuration,nginx]
 
