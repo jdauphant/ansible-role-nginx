@@ -155,7 +155,9 @@ Additional configuration are created in /etc/nginx/conf.d/
            - listen 8080
            - server_name localhost
            - root /tmp/site1
-           - location / { try_files $uri $uri/ /index.html; }
+           - location / { try_files $uri $uri/ /index.html;
+               include access/foo;
+           }
            - location /images/ { try_files $uri $uri/ /index.html; }
          bar:
            - listen 9090
