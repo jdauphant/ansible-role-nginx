@@ -43,3 +43,13 @@
   notify:
    - reload nginx
   tags: [configuration,nginx]
+
+- name: Create the include directory
+  file: path={{nginx_conf_dir}}/{{nginx_include_dir}} state=directory owner=root group={{nginx_group}} mode=0755
+  when: nginx_includes|length()>0
+  tags: [configuration,nginx,test]
+
+- name: Create the configurations for include file
+  template: src=includes.conf.j2 dest={{nginx_conf_dir}}/{{nginx_include_dir}}/{{ item }}.conf
+  with_items: nginx_includes.keys()
+  tags: [configuration,nginx,test]
