@@ -57,6 +57,9 @@ nginx_remove_sites: []
 nginx_configs: {}
 nginx_remove_configs: []
 
+nginx_include_dir: includes
+nginx_includes: {}
+
 nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []
 
