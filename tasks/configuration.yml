@@ -15,7 +15,7 @@
 - name: Copy the nginx configuration file
   template: src=nginx.conf.j2 dest={{nginx_conf_dir}}/nginx.conf
   notify:
-   - restart nginx
+   - reload nginx
   tags: [configuration,nginx]
 
 - name: Ensure auth_basic files created
@@ -27,14 +27,14 @@
   template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item.key }}.conf
   with_dict: nginx_default_sites
   notify:
-   - restart nginx
+   - reload nginx
   tags: [configuration,nginx]
 
 - name: Create the configurations for sites
   template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item.key }}.conf
   with_dict: nginx_sites
   notify:
-   - restart nginx
+   - reload nginx
   tags: [configuration,nginx]
 
 - name: Create links for sites-enabled
