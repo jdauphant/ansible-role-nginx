@@ -16,3 +16,7 @@
 - name: Ensure YUM official nginx repository
   template: src=nginx.repo.j2 dest=/etc/yum.repos.d/nginx.repo
   when: ansible_os_family == 'RedHat'
+
+- name: Ensure zypper official nginx repository
+  zypper_repository: repo="http://nginx.org/packages/sles/12" name="nginx" disable_gpg_check=yes
+  when: ansible_distribution == 'SLES' and ansible_distribution_version == '12'
