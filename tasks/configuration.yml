@@ -31,7 +31,7 @@
   tags: [configuration,nginx]
 
 - name: Create links for sites-enabled
-  file: state=link src={{nginx_conf_dir}}/sites-available/{{ item }}.conf dest={{nginx_conf_dir}}/sites-enabled/{{ hostvars[inventory_hostname][item] | default(item) }}.conf
+  file: state=link src={{nginx_conf_dir}}/sites-available/{{ hostvars[inventory_hostname][item] | default(item) }}.conf dest={{nginx_conf_dir}}/sites-enabled/{{ hostvars[inventory_hostname][item] | default(item) }}.conf
   with_items: nginx_sites.keys() | difference(nginx_remove_sites)
   notify:
    - reload nginx
