@@ -9,6 +9,8 @@ nginx_ubuntu_pkg:
 nginx_freebsd_pkg:
   - nginx
 
+nginx_freebsd_port: "www/nginx"
+
 nginx_suse_pkg:
   - nginx
 

@@ -1,0 +1,9 @@
+---
+- name: Install the nginx port
+  portinstall: name={{ item }} state=present
+  with_items: nginx_freebsd_port
+  environment: "{{ nginx_env }}"
+  when: ansible_os_family == "FreeBSD" 
+  tags:  [ source,nginx ]
+
+

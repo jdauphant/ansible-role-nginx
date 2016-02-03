@@ -3,6 +3,8 @@
   when: nginx_official_repo == True
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
+- include: installation.source.yml
+  when: nginx_installation_type == "source"
 - include: remove-defaults.yml
   when: not keep_only_specified
 - include: remove-extras.yml
