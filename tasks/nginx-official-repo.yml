@@ -1,16 +1,19 @@
 ---
 - name: Ensure APT official nginx key
   apt_key: url=http://nginx.org/keys/nginx_signing.key
+  environment: "{{ nginx_env }}"
   tags: [packages,nginx]
   when: ansible_os_family == 'Debian'
 
 - name: Ensure APT official nginx repository
   apt_repository: repo="deb http://nginx.org/packages/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx"
+  environment: "{{ nginx_env }}"
   tags: [packages,nginx]
   when: ansible_os_family == 'Debian'
 
 - name: Ensure RPM official nginx key
   rpm_key: key=http://nginx.org/keys/nginx_signing.key
+  environment: "{{ nginx_env }}"
   when: ansible_os_family == 'RedHat'
 
 - name: Ensure YUM official nginx repository
@@ -19,4 +22,5 @@
 
 - name: Ensure zypper official nginx repository
   zypper_repository: repo="http://nginx.org/packages/sles/12" name="nginx" disable_gpg_check=yes
+  environment: "{{ nginx_env }}"
   when: ansible_distribution == 'SLES' and ansible_distribution_version == '12'
