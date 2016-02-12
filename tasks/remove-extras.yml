@@ -1,6 +1,6 @@
 ---
 - name: Find enabled sites
-  shell: ls -1 {{nginx_conf_dir}}/sites-enabled
+  shell: ls -1 {{nginx_conf_dir}}/sites-enabled || true
   register: enabled_sites
   changed_when: False
   tags: [configuration,nginx]
