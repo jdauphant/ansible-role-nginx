@@ -28,7 +28,7 @@ galaxy_info:
       - trusty
    - name: FreeBSD
      versions:
-      - 10
+      - 10.0
   categories:
    - web
 allow_duplicates: yes
