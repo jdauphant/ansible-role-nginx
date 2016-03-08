@@ -1,13 +1,13 @@
 ---
 - name: Find enabled sites
-  shell: ls -1 {{nginx_conf_dir}}/sites-enabled || true
+  shell: ls -1 {{nginx_conf_dir}}/sites-enabled
   register: enabled_sites
   changed_when: False
   tags: [configuration,nginx]
 
 - name: Disable unmanaged sites
   file: path={{nginx_conf_dir}}/sites-enabled/{{ item }} state=absent
-  with_items: enabled_sites.stdout_lines
+  with_items: "{{ enabled_sites.stdout_lines }}"
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_sites.keys()
   notify:
@@ -28,4 +28,3 @@
   notify:
    - reload nginx
   tags: [configuration,nginx]
-
