@@ -27,6 +27,5 @@ script:
   - sudo cat /etc/nginx/auth_basic/demo
   - sudo nginx -t
 after_script:
-  - ls /etc/nginx/auth_basic/
-  - ls /etc/nginx/conf.d/
-  - ls /etc/nginx/sites-enabled/
+  - ls -l /etc/nginx
+  - ls -l /etc/nginx/*
