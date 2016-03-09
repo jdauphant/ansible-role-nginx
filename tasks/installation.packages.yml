@@ -10,7 +10,7 @@
   tags: [packages,nginx]
 
 - name: Install the nginx packages
-  yum: name={{ item }} state=present enablerepo={{ "nginx," if nginx_official_repo else "" }}
+  yum: name={{ item }} state=present enablerepo={{ "nginx" if nginx_official_repo else "" }}
   with_items: "{{ nginx_redhat_pkg }}"
   when:  nginx_is_el|bool
   tags: [packages,nginx]
@@ -36,7 +36,7 @@
   tags: [packages,nginx]
 
 - name: Install the nginx packages
-  zypper: name={{ item }} state=present 
+  zypper: name={{ item }} state=present
   with_items: "{{ nginx_suse_pkg }}"
   when: ansible_os_family == "Suse"
   tags: [packages,nginx]
