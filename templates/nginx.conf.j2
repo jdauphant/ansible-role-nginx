@@ -28,6 +28,17 @@ http {
         include {{ nginx_conf_dir }}/sites-enabled/*;
 }
 
+{% if nginx_official_repo_mainline %}
+stream {
+
+{% for v in nginx_stream_params %}
+        {{ v }};
+{% endfor %}
+
+        include {{ nginx_conf_dir }}/conf.d/stream/*.conf;
+}
+{% endif %}
+
 {% if nginx_daemon_mode == "off" %}
 daemon off;
 {% endif %}
