@@ -10,7 +10,7 @@
   tags: [packages,nginx]
 
 - name: Install the nginx packages
-  yum: name={{ item }} state=present enablerepo={{ "nginx" if nginx_official_repo else "" }}
+  yum: name={{ item }} state=present disablerepo='*' enablerepo={{ "nginx," if nginx_official_repo else "" }}{{ yum_epel_repo }},{{ yum_base_repo }}
   with_items: "{{ nginx_redhat_pkg }}"
   when:  nginx_is_el|bool
   tags: [packages,nginx]
