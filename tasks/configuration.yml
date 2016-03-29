@@ -2,7 +2,7 @@
 - name: Copy the nginx configuration file
   template: src=nginx.conf.j2 dest={{nginx_conf_dir}}/nginx.conf
   notify:
-   - restart nginx
+   - reload nginx
   tags: [configuration,nginx]
 
 - name: Ensure auth_basic files created
@@ -10,16 +10,23 @@
   with_items: "{{ nginx_auth_basic_files.keys() }}"
   tags: [configuration,nginx]
 
+- name: Create the configurations for default sites
+  template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item.key }}.conf
+  with_dict: "{{ nginx_default_sites }}"
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+
 - name: Create the configurations for sites
-  template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item }}.conf
-  with_items: "{{ nginx_sites.keys() | difference(nginx_remove_sites) }}"
+  template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item.key }}.conf
+  with_dict: "{{ nginx_sites }}"
   notify:
    - reload nginx
   tags: [configuration,nginx]
 
 - name: Create links for sites-enabled
   file: state=link src={{nginx_conf_dir}}/sites-available/{{ item }}.conf dest={{nginx_conf_dir}}/sites-enabled/{{ item }}.conf
-  with_items: "{{ nginx_sites.keys() | difference(nginx_remove_sites) }}"
+  with_items: "{{ nginx_sites.keys()|list + nginx_default_sites.keys()|list }}"
   notify:
    - reload nginx
   tags: [configuration,nginx]
@@ -29,4 +36,26 @@
   with_items: "{{ nginx_configs.keys() }}"
   notify:
    - reload nginx
+  tags: [configuration,nginx]
+
+- name: Create extra dir
+  file:
+    path: "{{nginx_conf_dir}}/extra"
+    state: directory
+
+- name: Create extra files
+  copy:
+    dest: "{{nginx_conf_dir}}/extra/{{item.key}}"
+    content: "{{item.value}}"
+  with_dict: "{{ nginx_extra_files }}"
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+
+- name: Check nginx syntax of configuration files
+  shell: "{{ nginx_binary_name }} -t"
+  register: result
+  changed_when: "result.rc != 0"
+  always_run: yes
+  when: "{{ nginx_installation_type in nginx_installation_types_using_service }}"
   tags: [configuration,nginx]

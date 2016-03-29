@@ -27,6 +27,9 @@ nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% e
 nginx_user: "{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Suse' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
+# Any additional groups the nginx user should be added to
+nginx_groups: ""
+
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
 
 nginx_worker_processes: "{% if ansible_processor_vcpus is defined %}{{ ansible_processor_vcpus }}{% else %}auto{% endif %}"
@@ -46,12 +49,12 @@ nginx_http_params:
   - server_tokens off
   - types_hash_max_size 2048
 
-nginx_sites:
-  default:
-     - listen 80 default_server
-     - server_name _
-     - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
-     - index index.html
+# nginx_sites is used to install one or more particular vhosts.
+# nginx_defaults_sites is used to always install one or more particular vhosts,
+# no matter what else is getting installed
+nginx_sites: {}
+nginx_default_sites: {}
+
 nginx_remove_sites: []
 
 nginx_configs: {}
@@ -61,3 +64,7 @@ nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []
 
 nginx_daemon_mode: "on"
+
+# dict of file names to their contents. The file names will be prefixed with
+# {{nginx_conf_dir}}/extra
+nginx_extra_files: {}
