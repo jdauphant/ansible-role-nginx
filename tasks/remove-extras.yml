@@ -7,7 +7,7 @@
 
 - name: Disable unmanaged sites
   file: path={{nginx_conf_dir}}/sites-enabled/{{ item }} state=absent
-  with_items: enabled_sites.stdout_lines
+  with_items: '{% if not enabled_sites|skipped %}{{ enabled_sites.stdout_lines }}{% endif %}'
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_sites.keys() and item[:-5] not in nginx_default_sites.keys()
   notify:
@@ -22,7 +22,7 @@
 
 - name: Remove unmanaged config files
   file: name={{nginx_conf_dir}}/conf.d/{{ item }} state=absent
-  with_items: config_files.stdout_lines
+  with_items: '{% if not config_files|skipped %}{{ config_files.stdout_lines }}{% endif %}'
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_configs.keys()
   notify:
@@ -37,7 +37,7 @@
 
 - name: Remove unmanaged extra files
   file: name={{nginx_conf_dir}}/extra/{{item}} state=absent
-  with_items: extra_files.stdout_lines
+  with_items: '{% if not extra_files|skipped %}{{ extra_files.stdout_lines }}{% endif %}'
   when: item not in nginx_extra_files.keys()
   notify:
    - reload nginx
