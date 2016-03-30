@@ -16,6 +16,7 @@ yum_epel_repo: epel
 yum_base_repo: base
 
 nginx_official_repo: False
+nginx_official_repo_mainline: False
 
 keep_only_specified: False
 
@@ -46,6 +47,8 @@ nginx_http_params:
   - server_tokens off
   - types_hash_max_size 2048
 
+nginx_stream_params: []
+
 nginx_sites:
   default:
      - listen 80 default_server
@@ -55,6 +58,7 @@ nginx_sites:
 nginx_remove_sites: []
 
 nginx_configs: {}
+nginx_stream_configs: {}
 nginx_remove_configs: []
 
 nginx_auth_basic_files: {}

@@ -30,3 +30,11 @@
   notify:
    - reload nginx
   tags: [configuration,nginx]
+
+- name: Create the configurations for independent config file for streams
+  template: src=config_stream.conf.j2 dest={{nginx_conf_dir}}/conf.d/stream/{{ item }}.conf
+  with_items: "{{ nginx_stream_configs.keys() }}"
+  notify:
+   - reload nginx
+  tags: [configuration,nginx]
+  when: nginx_official_repo_mainline
