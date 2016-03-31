@@ -1,5 +1,6 @@
 #{{ ansible_managed }}
 
+{% if nginx_sites[item] != None %}
 {% for v in nginx_configs[item] %}
 {% if v.find('\n') != -1 %}
 {{v}}
@@ -7,3 +8,4 @@
 {% if v != "" %}{{ v.replace(";",";\n   ").replace(" {"," {\n    ").replace(" }"," \n}\n") }}{% if v.find('{') == -1%};
 {% endif %}{% endif %}{% endif %}
 {% endfor %}
+{% endif %}
