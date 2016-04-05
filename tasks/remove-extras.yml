@@ -22,7 +22,7 @@
 
 - name: Remove unmanaged config files
   file: name={{nginx_conf_dir}}/conf.d/{{ item }} state=absent
-  with_items: "{{ config_files.stdout_lines }}"
+  with_items: "{{ config_files.stdout_lines | default([]) }}"
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_configs.keys()
   notify:
