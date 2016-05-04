@@ -33,6 +33,7 @@ nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
 nginx_worker_processes: "{% if ansible_processor_vcpus is defined %}{{ ansible_processor_vcpus }}{% else %}auto{% endif %}"
 nginx_worker_rlimit_nofile: 1024
 nginx_log_dir: "/var/log/nginx"
+nginx_error_log_level: "error"
 
 nginx_events_params:
   - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}
@@ -43,7 +44,7 @@ nginx_http_params:
   - tcp_nodelay "on"
   - keepalive_timeout "65"
   - access_log "{{nginx_log_dir}}/access.log"
-  - error_log "{{nginx_log_dir}}/error.log"
+  - "error_log {{nginx_log_dir}}/error.log {{nginx_error_log_level}}"
   - server_tokens off
   - types_hash_max_size 2048
 
