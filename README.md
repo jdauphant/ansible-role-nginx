@@ -171,6 +171,7 @@ Additional configuration are created in /etc/nginx/conf.d/
 - hosts: all
   roles:
     - role: nginx
+      nginx_error_log_level: info
       nginx_http_params:
         - sendfile on
         - access_log /var/log/nginx/access.log
