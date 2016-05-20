@@ -190,10 +190,12 @@ Additional configuration are created in /etc/nginx/conf.d/
            - server_name ansible
            - root /tmp/site2
            - if ( $host = example.com ) { rewrite ^(.*)$ http://www.example.com$1 permanent; }
-           - location / { try_files $uri $uri/ /index.html; }
+           - location / {
+             try_files $uri $uri/ /index.html;
+             auth_basic            "Restricted";
+             auth_basic_user_file  auth_basic/demo;
+           }
            - location /images/ { try_files $uri $uri/ /index.html; }
-           - auth_basic            "Restricted"
-           - auth_basic_user_file  auth_basic/demo
       nginx_configs:
         proxy:
             - proxy_set_header X-Real-IP  $remote_addr
@@ -243,10 +245,10 @@ Additional configuration are created in /etc/nginx/conf.d/
 7) Example to use this role with my ssl-certs role to generate or copie ssl certificate ( https://galaxy.ansible.com/list#/roles/3115 )
 ```yaml
  - hosts: all
-   roles: 
+   roles:
      - jdauphant.ssl-certs
      - role: jdauphant.nginx
-       nginx_configs: 
+       nginx_configs:
           ssl:
                - ssl_certificate_key {{ssl_certs_privkey_path}}
                - ssl_certificate     {{ssl_certs_cert_path}}
@@ -272,4 +274,3 @@ Author Information
 
 - Original : Benno Joy
 - Modified by : DAUPHANT Julien
-
