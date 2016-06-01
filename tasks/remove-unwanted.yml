@@ -1,7 +1,7 @@
 ---
 - name: Remove unwanted sites
   file: path={{nginx_conf_dir}}/{{ item[0] }}/{{ item[1] }}.conf state=absent
-  with_nested: 
+  with_nested:
     - [ 'sites-enabled', 'sites-available']
     - "{{ nginx_remove_sites }}"
   notify:
