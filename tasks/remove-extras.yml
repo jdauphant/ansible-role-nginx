@@ -15,7 +15,7 @@
   tags: [configuration,nginx]
 
 - name: Find config files
-  shell: ls -1 {{nginx_conf_dir}}/conf.d
+  shell: find {{nginx_conf_dir}}/conf.d -maxdepth 1 -type f -name '*.conf' -exec basename {} \;
   register: config_files
   changed_when: False
   tags: [configuration,nginx]
