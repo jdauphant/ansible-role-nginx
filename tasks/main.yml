@@ -10,6 +10,7 @@
   when: keep_only_specified
 - include: remove-unwanted.yml
 - include: configuration.yml
+- include: monitoring.yml
 
 - name: Start the nginx service
   service: name={{ nginx_service_name }} state=started enabled=yes

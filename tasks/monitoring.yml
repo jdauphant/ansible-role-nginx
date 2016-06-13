@@ -1,0 +1,15 @@
+---
+
+- name: Ship nginx access logs to centralized logging infrastructure
+  watch_logs:
+    name: nginx-access
+    file_paths:
+      - "{{nginx_log_dir}}/*access.log"
+  tags: [logging,nginx]
+
+- name: Ship nginx error logs to centralized logging infrastructure
+  watch_logs:
+    name: nginx-errors
+    file_paths:
+      - "{{nginx_log_dir}}/*error.log"
+  tags: [logging,nginx]
