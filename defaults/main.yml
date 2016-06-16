@@ -12,8 +12,7 @@ nginx_freebsd_pkg:
 nginx_suse_pkg:
   - nginx
 
-yum_epel_repo: epel
-yum_base_repo: base
+nginx_install_epel_repo: True
 
 nginx_official_repo: False
 nginx_official_repo_mainline: False

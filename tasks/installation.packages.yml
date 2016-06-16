@@ -6,7 +6,7 @@
 
 - name: Install the epel packages
   yum: name=epel-release state=present
-  when: nginx_is_el|bool and yum_epel_repo
+  when: nginx_is_el|bool and nginx_install_epel_repo|bool
   tags: [packages,nginx]
 
 - name: Install the nginx packages
