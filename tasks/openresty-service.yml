@@ -1,0 +1,19 @@
+---
+- name: "Add the {{ nginx_user }} group"
+  group:
+    name: "{{nginx_user}}"
+    system: true
+
+- name: "Add the {{ nginx_user }} user"
+  user:
+    name: "{{nginx_user}}"
+    system: true
+    shell: /sbin/nologin
+    group: "{{ nginx_user }}"
+    home: /dev/null
+
+- name: Add a systemd unit file for openresty
+  template:
+    src: openresty.service.j2
+    dest: /etc/systemd/system/openresty.service
+  when: ansible_service_mgr == 'systemd'

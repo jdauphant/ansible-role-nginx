@@ -1,6 +1,8 @@
 ---
+nginx_openresty: False
+
 nginx_redhat_pkg:
-  - nginx
+  - "{% if nginx_openresty %}openresty{% else %}nginx{% endif %}"
 
 nginx_ubuntu_pkg:
   - python-selinux
@@ -20,11 +22,11 @@ nginx_official_repo_mainline: False
 keep_only_specified: False
 
 nginx_installation_type: "packages"
-nginx_binary_name: "nginx"
+nginx_binary_name: "{% if nginx_openresty %}openresty{% else %}nginx{% endif %}"
 nginx_service_name: "{{nginx_binary_name}}"
-nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% else %}/etc/nginx{% endif %}"
+nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% elif nginx_openresty%}/usr/local/openresty/nginx/conf{% else %}/etc/nginx{% endif %}"
 
-nginx_user: "{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Suse' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
+nginx_user: "{% if nginx_openresty %}openresty{% elif ansible_os_family == 'RedHat' or ansible_os_family == 'Suse' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'

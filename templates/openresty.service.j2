@@ -1,0 +1,22 @@
+[Unit]
+Description=The nginx HTTP and reverse proxy server
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/openresty.pid
+# Nginx will fail to start if /run/openresty.pid already exists but has the wrong
+# SELinux context. This might happen when running `nginx -t` from the cmdline.
+# https://bugzilla.redhat.com/show_bug.cgi?id=1268621
+ExecStartPre=/usr/bin/rm -f /run/nginx.pid
+ExecStartPre=/usr/local/openresty/nginx/sbin/nginx -t -c {{ nginx_conf_dir }}/nginx.conf
+ExecStart=/usr/local/openresty/nginx/sbin/nginx -c {{ nginx_conf_dir }}/nginx.conf
+#ExecReload=/usr/local/openresty/nginx/sbin/nginx -s reload -c {{ nginx_conf_dir }}/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+KillSignal=SIGQUIT
+TimeoutStopSec=5
+KillMode=process
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

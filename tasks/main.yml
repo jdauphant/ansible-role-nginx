@@ -1,8 +1,12 @@
 ---
 - include: nginx-official-repo.yml
-  when: nginx_official_repo == True
+  when: nginx_official_repo == True and nginx_openresty != True
+- include: openresty-repo.yml
+  when: nginx_openresty == True and nginx_official_repo != True
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
+- include: openresty-service.yml
+  when: nginx_openresty == True and nginx_official_repo != True
 - include: ensure-dirs.yml
 - include: remove-defaults.yml
   when: not keep_only_specified
