@@ -9,6 +9,10 @@ pid        {{ nginx_pid_file }};
 
 worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
+{% if nginx_extra_root_params %}
+{{ nginx_extra_root_params }}
+{% endif %}
+
 events {
 {% for v in nginx_events_params %}
         {{ v }};
