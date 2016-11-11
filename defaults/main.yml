@@ -34,7 +34,7 @@ nginx_worker_rlimit_nofile: 1024
 nginx_log_dir: "/var/log/nginx"
 nginx_error_log_level: "error"
 
-nginx_extra_root_params: ""
+nginx_extra_root_params: []
 nginx_events_params:
   - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}
 
