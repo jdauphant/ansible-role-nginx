@@ -15,7 +15,7 @@
     - reload nginx - after config check
 
 - name: check nginx configuration
-  shell: "{{ nginx_binary_name }} -t"
+  command: "{{ nginx_binary_name }} -t"
   register: result
   changed_when: "result.rc != 0"
   always_run: yes
