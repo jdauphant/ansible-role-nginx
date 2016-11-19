@@ -1,0 +1,9 @@
+---
+- name: Ensure openresty RPM repository key
+  rpm_key: key=https://copr-be.cloud.fedoraproject.org/results/openresty/openresty/pubkey.gpg
+  environment: "{{ nginx_env }}"
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure openresty repository
+  template: src=openresty.repo.j2 dest=/etc/yum.repos.d/openresty.repo
+  when: ansible_os_family == 'RedHat'

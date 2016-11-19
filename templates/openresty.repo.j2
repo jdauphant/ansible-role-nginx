@@ -1,0 +1,12 @@
+[openresty]
+name=Official OpenResty Repository
+{% if ansible_distribution == "CentOS" %}
+baseurl=https://copr-be.cloud.fedoraproject.org/results/openresty/openresty/epel-$releasever-$basearch/
+{% else %}
+baseurl=https://copr-be.cloud.fedoraproject.org/results/openresty/openresty/epel-{{ansible_distribution_major_version}}-$basearch/
+{% endif %}
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/openresty/openresty/pubkey.gpg
+enabled=1
+enabled_metadata=1
