@@ -1,14 +1,20 @@
 ---
 - include: nginx-official-repo.yml
   when: nginx_official_repo == True
+
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
+
 - include: ensure-dirs.yml
+
 - include: remove-defaults.yml
-  when: not keep_only_specified
+  when: not keep_only_specified or nginx_remove_default
+
 - include: remove-extras.yml
   when: keep_only_specified
+
 - include: remove-unwanted.yml
+
 - include: configuration.yml
 
 - name: Start the nginx service
