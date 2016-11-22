@@ -2,19 +2,16 @@
 - name: Ensure APT official nginx key
   apt_key: url=http://nginx.org/keys/nginx_signing.key
   environment: "{{ nginx_env }}"
-  tags: [packages,nginx]
   when: ansible_os_family == 'Debian'
 
 - name: Ensure APT official nginx repository
   apt_repository: repo="deb http://nginx.org/packages/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx"
   environment: "{{ nginx_env }}"
-  tags: [packages,nginx]
   when: ansible_os_family == 'Debian' and not nginx_official_repo_mainline
 
 - name: Ensure APT official nginx repository (mainline)
   apt_repository: repo="deb http://nginx.org/packages/mainline/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} nginx"
   environment: "{{ nginx_env }}"
-  tags: [packages,nginx]
   when: ansible_os_family == 'Debian' and nginx_official_repo_mainline
 
 - name: Ensure RPM official nginx key
