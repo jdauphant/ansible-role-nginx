@@ -1,6 +1,6 @@
 ---
 - name: Copy the nginx configuration file
-  template: src=nginx.conf.j2 dest={{nginx_conf_dir}}/nginx.conf
+  template: src={{tpls.nginx_conf}} dest={{nginx_conf_dir}}/nginx.conf
   notify:
    - restart nginx
 

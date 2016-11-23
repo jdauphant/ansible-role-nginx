@@ -56,6 +56,10 @@ nginx_sites:
      - server_name _
      - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
      - index index.html
+
+tpls:
+  nginx_conf: "nginx.conf.j2"
+
 nginx_remove_sites: []
 
 nginx_configs: {}
