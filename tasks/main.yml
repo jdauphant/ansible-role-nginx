@@ -2,7 +2,7 @@
 - include: nginx-official-repo.yml
   when: nginx_official_repo == True
   tags: [packages,nginx]
-  
+
 - include: installation.packages.yml
   when: nginx_installation_type == "packages"
   tags: [packages,nginx]
