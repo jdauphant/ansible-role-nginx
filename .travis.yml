@@ -5,9 +5,10 @@ before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -qq python-apt python-pycurl
 install:
-  - pip install ansible
+  - pip install ansible ansible-lint
   - ansible --version
 script:
+  - ansible-lint tasks/main.yml
   - echo localhost > inventory
   - ansible-playbook -i inventory --syntax-check --list-tasks test.yml -e "role_name=ansible-role-nginx" -e "hosts_group=hosts_group"
   - ansible-playbook -i inventory --connection=local --sudo -vvvv test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=localhost"
