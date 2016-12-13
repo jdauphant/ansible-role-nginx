@@ -12,7 +12,7 @@ Requirements
 ------------
 
 This role requires Ansible 1.4 or higher and platform requirements are listed
-in the metadata file.  
+in the metadata file.
 For FreeBSD a working pkgng setup is required (see: https://www.freebsd.org/doc/handbook/pkgng-intro.html )
 
 Role Variables
@@ -259,6 +259,46 @@ Additional configuration are created in /etc/nginx/conf.d/
                - root "/usr/share/nginx/html"
                - index index.html
 ```
+8) Site configuration using a custom template.
+Instead of defining a site config file using a list of attributes,
+you may use a hash that indicates an alternate template.
+Additional hash elements are accessible inside the template through
+the `nginx_sites[item]` hash.
+```yaml
+- hosts: all
+
+  roles:
+  - role: nginx
+    nginx_sites:
+      bar:
+        template: bar.conf.j2
+        server_name: bar.example.com
+```
+Custom template: bar.conf.j2:
+```handlebars
+# {{ ansible_managed }}
+upstream backend {
+  server backend1.example.com weight=5;
+  server backend2.example.com:8080;
+  server unix:/tmp/backend3;
+
+  server backup1.example.com:8080 backup;
+  server backup2.example.com:8080 backup;
+}
+server {
+  server_name {{nginx_sites[item].server_name}};
+  location / {
+    proxy_pass http://backend;
+  }
+}
+```
+Using a custom template allows for unlimited flexibility in configuring the site config file.
+This example demonstrates the common practice of configuring a site server block
+in the same file as its complementary upstream block.
+If you use this option:
+* _The hash **must** include a `template:` value, or the configuration task will fail._
+* _This role cannot check tha validity of your custom template.
+It is up to you to provide a template with valid content and formatting for NGINX._
 
 Dependencies
 ------------
