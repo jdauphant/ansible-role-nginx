@@ -1,53 +1,50 @@
 ---
-- name: Create the directories for site specific configurations
-  file: path={{nginx_conf_dir}}/{{ item }} state=directory owner=root group={{nginx_group}} mode=0755
-  with_items:
-    - "sites-available"
-    - "sites-enabled"
-    - "auth_basic"
-    - "conf.d"
-  tags: [configuration,nginx]
-
-- name: Ensure log directory exist
-  file: path={{ nginx_log_dir }} state=directory owner={{nginx_user}} group={{nginx_group}} mode=0755
-  tags: [configuration,nginx]
-
 - name: Copy the nginx configuration file
-  template: src=nginx.conf.j2 dest={{nginx_conf_dir}}/nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: "{{nginx_conf_dir}}/nginx.conf"
   notify:
    - restart nginx
-  tags: [configuration,nginx]
 
 - name: Ensure auth_basic files created
-  template: src=auth_basic.j2 dest={{nginx_conf_dir}}/auth_basic/{{ item }} owner=root group={{nginx_group}} mode=0750
-  with_items: nginx_auth_basic_files.keys()
-  tags: [configuration,nginx]
+  template:
+    src: auth_basic.j2
+    dest: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
+    owner: root
+    group: "{{nginx_group}}"
+    mode: 0750
+  with_items: "{{ nginx_auth_basic_files.keys() }}"
 
 - name: Create the configurations for sites
-  template: src=site.conf.j2 dest={{nginx_conf_dir}}/sites-available/{{ item }}.conf
-  with_items: nginx_sites.keys()
-  notify: 
-   - restart nginx
-  tags: [configuration,nginx]
+  template:
+    src: site.conf.j2
+    dest: "{{nginx_conf_dir}}/sites-available/{{ item }}.conf"
+  with_items: "{{ nginx_sites.keys() | difference(nginx_remove_sites) }}"
+  notify:
+   - reload nginx
 
 - name: Create links for sites-enabled
-  file: state=link src={{nginx_conf_dir}}/sites-available/{{ item }}.conf dest={{nginx_conf_dir}}/sites-enabled/{{ item }}.conf
-  with_items: nginx_sites.keys()
+  file:
+    state: link
+    src: "{{nginx_conf_dir}}/sites-available/{{ item }}.conf"
+    dest: "{{nginx_conf_dir}}/sites-enabled/{{ item }}.conf"
+  with_items: "{{ nginx_sites.keys() | difference(nginx_remove_sites) }}"
   notify:
    - reload nginx
-  tags: [configuration,nginx]
 
 - name: Create the configurations for independent config file
-  template: src=config.conf.j2 dest={{nginx_conf_dir}}/conf.d/{{ item }}.conf
-  with_items: nginx_configs.keys()
+  template:
+    src: config.conf.j2
+    dest: "{{nginx_conf_dir}}/conf.d/{{ item }}.conf"
+  with_items: "{{ nginx_configs.keys() }}"
   notify:
    - reload nginx
-  tags: [configuration,nginx]
 
-- name: Check nginx syntax of configuration files
-  shell: "{{ nginx_binary_name }} -t"
-  register: result
-  changed_when: "result.rc != 0"
-  always_run: yes
-  when: nginx_installation_type in nginx_installation_types_using_service
-  tags: [configuration,nginx]
+- name: Create the configurations for independent config file for streams
+  template:
+    src: config_stream.conf.j2
+    dest: "{{nginx_conf_dir}}/conf.d/stream/{{ item }}.conf"
+  with_items: "{{ nginx_stream_configs.keys() }}"
+  notify:
+   - reload nginx
+  when: nginx_official_repo_mainline

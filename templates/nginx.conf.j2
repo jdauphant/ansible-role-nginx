@@ -9,6 +9,12 @@ pid        {{ nginx_pid_file }};
 
 worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
+{% if nginx_extra_root_params is defined and nginx_extra_root_params is iterable %}
+{% for line in nginx_extra_root_params %}
+{{ line }};
+{% endfor %}
+{% endif %}
+
 events {
 {% for v in nginx_events_params %}
         {{ v }};
@@ -27,6 +33,17 @@ http {
         include {{ nginx_conf_dir }}/conf.d/*.conf;
         include {{ nginx_conf_dir }}/sites-enabled/*;
 }
+
+{% if nginx_official_repo_mainline %}
+stream {
+
+{% for v in nginx_stream_params %}
+        {{ v }};
+{% endfor %}
+
+        include {{ nginx_conf_dir }}/conf.d/stream/*.conf;
+}
+{% endif %}
 
 {% if nginx_daemon_mode == "off" %}
 daemon off;

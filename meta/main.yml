@@ -2,7 +2,7 @@
 galaxy_info:
   author: "DAUPHANT Julien"
   license: BSD
-  min_ansible_version: 1.4
+  min_ansible_version: 2.0
   platforms:
    - name: EL
      versions:
@@ -28,7 +28,7 @@ galaxy_info:
       - trusty
    - name: FreeBSD
      versions:
-      - 10
+      - 10.0
   categories:
    - web
 allow_duplicates: yes
