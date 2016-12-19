@@ -62,7 +62,7 @@ nginx_configs: {}
 nginx_stream_configs: {}
 nginx_remove_configs: []
 
-nginx_auth_basic_files: ~
+nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []
 
 nginx_daemon_mode: "on"
