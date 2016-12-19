@@ -14,7 +14,7 @@
     group: "{{nginx_group}}"
     mode: 0750
   with_items: "{{ nginx_auth_basic_files.keys() }}"
-  when: nginx_auth_basic_files is defined and nginx_auth_basic_files is not None
+  when: "{{ nginx_auth_basic_files | length }} >= 1"
 
 - name: Create the configurations for sites
   template:
