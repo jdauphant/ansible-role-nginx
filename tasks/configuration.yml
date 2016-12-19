@@ -6,15 +6,15 @@
   notify:
    - restart nginx
 
-- name: Ensure auth_basic files created
-  template:
-    src: auth_basic.j2
-    dest: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
-    owner: root
-    group: "{{nginx_group}}"
-    mode: 0750
-  with_items: "{{ nginx_auth_basic_files.keys() }}"
-  when: "{{ nginx_auth_basic_files.keys() }}"
+#- name: Ensure auth_basic files created
+#  template:
+#    src: auth_basic.j2
+#    dest: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
+#    owner: root
+#    group: "{{nginx_group}}"
+#    mode: 0750
+#  with_items: "{{ nginx_auth_basic_files.keys() }}"
+#  when: "{{ nginx_auth_basic_files.keys() }}"
 
 - name: Create the configurations for sites
   template:
