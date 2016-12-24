@@ -15,6 +15,13 @@ This role requires Ansible 1.4 or higher and platform requirements are listed
 in the metadata file.
 For FreeBSD a working pkgng setup is required (see: https://www.freebsd.org/doc/handbook/pkgng-intro.html )
 
+Install
+-------
+
+```sh
+ansible-galaxy install jdauphant.nginx
+```
+
 Role Variables
 --------------
 
