@@ -47,6 +47,7 @@ nginx_http_params:
   - "error_log {{nginx_log_dir}}/error.log {{nginx_error_log_level}}"
   - server_tokens off
   - types_hash_max_size 2048
+nginx_http_extra_params: []
 
 nginx_stream_params: []
 
