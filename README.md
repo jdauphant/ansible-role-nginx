@@ -138,6 +138,19 @@ for details.
         - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
 ```
 
+4) Install nginx and add extra variables to default config
+
+```yaml
+-hosts: all
+  vars:
+    - my_extra_params:
+      - client_max_body_size 200M
+# retain defaults and add additional `client_max_body_size` param
+  roles:
+    - role: jdauphant.nginx
+      nginx_http_params: {{ nginx_http_params_defaults + my_extra_params }}
+```
+
 Note: Each site added is represented by list of hashes, and the configurations
 generated are populated in /etc/nginx/site-available/, a link is from /etc/nginx/site-enable/ to /etc/nginx/site-available
 
