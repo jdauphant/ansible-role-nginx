@@ -48,7 +48,7 @@ nginx_http_default_params:
   - server_tokens off
   - types_hash_max_size 2048
 
-nginx_http_params: { nginx_http_default_params }
+nginx_http_params: "{{ nginx_http_default_params }}"
 
 nginx_stream_params: []
 
