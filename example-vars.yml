@@ -20,9 +20,6 @@ nginx_events_params:
 # A list of hashs that define the servers for nginx,
 # as with http parameters. Any valid server parameters
 # can be defined here.
-nginx_http_params:
-  - sendfile on
-  - access_log /var/log/nginx/access.log
 
 nginx_sites:
  default:
