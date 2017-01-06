@@ -6,26 +6,19 @@ galaxy_info:
   platforms:
    - name: EL
      versions:
-      - 5
-      - 6
+      - all
    - name: Fedora
      versions:
-      - 16
-      - 17
-      - 18
-      - 19
-      - 20
+      - all
    - name: opensuse
      versions:
-      - 13.1
-      - 13.2
+      - all
    - name: Ubuntu
      versions:
-      - precise
-      - quantal
-      - raring
-      - saucy
-      - trusty
+      - all
+   - name: Debian
+     versions:
+      - all
    - name: FreeBSD
      versions:
       - 10.0
