@@ -22,6 +22,10 @@ galaxy_info:
    - name: FreeBSD
      versions:
       - 10.0
+      - 10.1
+      - 10.2
+      - 10.3
+      - 11.0
   categories:
    - web
 allow_duplicates: yes
