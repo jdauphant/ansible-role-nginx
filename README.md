@@ -281,32 +281,26 @@ Additional configuration are created in /etc/nginx/conf.d/
 ```
 9) Site configuration using a custom template.
 Instead of defining a site config file using a list of attributes,
-you may use a hash that indicates an alternate template.
-Additional hash elements are accessible inside the template through
-the `item.value` hash.
+you may use a hash/dictionary that includes the filename of an alternate template.
+Additional values are accessible within the template via the `item.value` variable.
 ```yaml
 - hosts: all
 
   roles:
   - role: nginx
     nginx_sites:
-      bar:
-        template: bar.conf.j2
-        server_name: bar.example.com
+      custom_bar:
+        template: custom_bar.conf.j2
+        server_name: custom_bar.example.com
 ```
-Custom template: bar.conf.j2:
+Custom template: custom_bar.conf.j2:
 ```handlebars
 # {{ ansible_managed }}
 upstream backend {
-  server backend1.example.com weight=5;
-  server backend2.example.com:8080;
-  server unix:/tmp/backend3;
-
-  server backup1.example.com:8080 backup;
-  server backup2.example.com:8080 backup;
+  server 10.0.0.101;
 }
 server {
-  server_name {{item.value.server_name}};
+  server_name {{ item.value.server_name }};
   location / {
     proxy_pass http://backend;
   }
@@ -316,9 +310,10 @@ Using a custom template allows for unlimited flexibility in configuring the site
 This example demonstrates the common practice of configuring a site server block
 in the same file as its complementary upstream block.
 If you use this option:
-* _The hash **must** include a `template:, or the configuration task will fail._
-* _This role cannot check the validity of your custom template.
-It is up to you to provide a template with valid content and formatting for NGINX._
+* _The hash **must** include a `template:` value, or the configuration task will fail._
+* _This role cannot check tha validity of your custom template.
+If you use this method, the conf file formtting provided by this role is unavailable,
+and it is up to you to provide a template with valid content and formatting for NGINX._
 
 Dependencies
 ------------
