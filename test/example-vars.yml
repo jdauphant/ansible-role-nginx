@@ -22,35 +22,38 @@ nginx_events_params:
 # can be defined here.
 
 nginx_sites:
- default:
-     - listen 80
-     - server_name _
-     - root "/usr/share/nginx/html"
-     - index index.html
- foo:
-     - listen 8080
-     - server_name localhost
-     - root "/tmp/site1"
-     - location / { try_files $uri $uri/ /index.html; }
-     - location /images/ { try_files $uri $uri/ /index.html; }
- bar:
-     - listen 9090
-     - server_name ansible
-     - root "/tmp/site2"
-     - location / { try_files $uri $uri/ /index.html; }
-     - location /images/ {
-         try_files $uri $uri/ /index.html;
-         allow 127.0.0.1;
-         deny all;
-       }
-     - auth_basic            "Restricted"
-     - auth_basic_user_file  auth_basic/demo
- hhvm_test:
-     - |
-       listen 80;
-       server_name test_hhvm;
-       root "/tmp/hhvm";
-       {{nginx_hhvm}}
+  default:
+    - listen 80
+    - server_name _
+    - root "/usr/share/nginx/html"
+    - index index.html
+  foo:
+    - listen 8080
+    - server_name localhost
+    - root "/tmp/site1"
+    - location / { try_files $uri $uri/ /index.html; }
+    - location /images/ { try_files $uri $uri/ /index.html; }
+  bar:
+    - listen 9090
+    - server_name ansible
+    - root "/tmp/site2"
+    - location / { try_files $uri $uri/ /index.html; }
+    - location /images/ {
+        try_files $uri $uri/ /index.html;
+        allow 127.0.0.1;
+        deny all;
+      }
+    - auth_basic            "Restricted"
+    - auth_basic_user_file  auth_basic/demo
+  hhvm_test:
+    - |
+      listen 80;
+      server_name test_hhvm;
+      root "/tmp/hhvm";
+      {{nginx_hhvm}}
+  custom_bar:
+    template: custom_bar.conf.j2
+    server_name: bar.example.com
 
 # A list of hashs that define additional configuration
 nginx_configs:
