@@ -6,14 +6,15 @@
   notify:
    - restart nginx
 
-- name: Ensure auth_basic files created
-  template:
-    src: auth_basic.j2
-    dest: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
-    owner: root
-    group: "{{nginx_group}}"
-    mode: 0750
-  with_items: "{{ nginx_auth_basic_files.keys() }}"
+#- name: Ensure auth_basic files created
+#  template:
+#    src: auth_basic.j2
+#    dest: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
+#    owner: root
+#    group: "{{nginx_group}}"
+#    mode: 0750
+#  with_items: "{{ nginx_auth_basic_files.keys() }}"
+#  when: "{{ nginx_auth_basic_files.keys() }}"
 
 - name: Create the configurations for sites
   template:
@@ -32,19 +33,19 @@
   notify:
    - reload nginx
 
-- name: Create the configurations for independent config file
-  template:
-    src: config.conf.j2
-    dest: "{{nginx_conf_dir}}/conf.d/{{ item }}.conf"
-  with_items: "{{ nginx_configs.keys() }}"
-  notify:
-   - reload nginx
+#- name: Create the configurations for independent config file
+#  template:
+#    src: config.conf.j2
+#    dest: "{{nginx_conf_dir}}/conf.d/{{ item }}.conf"
+#  with_items: "{{ nginx_configs.keys() }}"
+#  notify:
+#   - reload nginx
 
-- name: Create the configurations for independent config file for streams
-  template:
-    src: config_stream.conf.j2
-    dest: "{{nginx_conf_dir}}/conf.d/stream/{{ item }}.conf"
-  with_items: "{{ nginx_stream_configs.keys() }}"
-  notify:
-   - reload nginx
-  when: nginx_official_repo_mainline
+#- name: Create the configurations for independent config file for streams
+#  template:
+#    src: config_stream.conf.j2
+#    dest: "{{nginx_conf_dir}}/conf.d/stream/{{ item }}.conf"
+#  with_items: "{{ nginx_stream_configs.keys() }}"
+#  notify:
+#   - reload nginx
+#  when: nginx_official_repo_mainline
