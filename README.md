@@ -283,7 +283,7 @@ Additional configuration are created in /etc/nginx/conf.d/
 Instead of defining a site config file using a list of attributes,
 you may use a hash that indicates an alternate template.
 Additional hash elements are accessible inside the template through
-the `nginx_sites[item]` hash.
+the `item.value` hash.
 ```yaml
 - hosts: all
 
@@ -306,7 +306,7 @@ upstream backend {
   server backup2.example.com:8080 backup;
 }
 server {
-  server_name {{nginx_sites[item].server_name}};
+  server_name {{item.value.server_name}};
   location / {
     proxy_pass http://backend;
   }
@@ -316,8 +316,8 @@ Using a custom template allows for unlimited flexibility in configuring the site
 This example demonstrates the common practice of configuring a site server block
 in the same file as its complementary upstream block.
 If you use this option:
-* _The hash **must** include a `template:` value, or the configuration task will fail._
-* _This role cannot check tha validity of your custom template.
+* _The hash **must** include a `template:, or the configuration task will fail._
+* _This role cannot check the validity of your custom template.
 It is up to you to provide a template with valid content and formatting for NGINX._
 
 Dependencies
