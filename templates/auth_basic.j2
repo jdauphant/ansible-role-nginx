@@ -1,5 +1,5 @@
 #{{ ansible_managed }}
 
-{% for v in nginx_auth_basic_files[item] %}
+{% for v in item.value %}
 {{ v }}
 {% endfor %}
