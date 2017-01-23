@@ -1,15 +1,5 @@
 ---
-nginx_redhat_pkg:
-  - nginx
-
-nginx_ubuntu_pkg:
-  - python-selinux
-  - nginx
-
-nginx_freebsd_pkg:
-  - nginx
-
-nginx_suse_pkg:
+nginx_pkgs:
   - nginx
 
 nginx_install_epel_repo: True

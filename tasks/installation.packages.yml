@@ -1,35 +1,15 @@
 ---
-- name: Install the selinux python module
-  package: name=libselinux-python state=present
-  when: ansible_os_family == "RedHat"
-
 - name: Install the epel packages
-  yum: name=epel-release state=present
+  package: name=epel-release state=present
   when: nginx_is_el|bool and nginx_install_epel_repo|bool
 
-- name: Install the nginx packages
-  yum: name={{ item }} state=present enablerepo={{ "nginx" if nginx_official_repo else "" }}
-  with_items: "{{ nginx_redhat_pkg }}"
-  when:  nginx_is_el|bool
+- name: Install the nginx packages from official repo
+  yum: name={{ item }} state=present enablerepo="nginx"
+  with_items: "{{ nginx_pkgs }}"
+  when: nginx_is_el|bool and nginx_official_repo
 
 - name: Install the nginx packages
   package: name={{ item }} state=present
-  with_items: "{{ nginx_redhat_pkg }}"
-  when: ansible_os_family == "RedHat" and not nginx_is_el|bool
-
-- name: Install the nginx packages
-  apt: name={{ item }} state=present
-  with_items: "{{ nginx_ubuntu_pkg }}"
+  with_items: "{{ nginx_pkgs }}"
   environment: "{{ nginx_env }}"
-  when: ansible_os_family == "Debian"
-
-- name: Install the nginx packages
-  pkgng: name={{ item }} state=present
-  with_items: "{{ nginx_freebsd_pkg }}"
-  environment: "{{ nginx_env }}"
-  when: ansible_os_family == "FreeBSD"
-
-- name: Install the nginx packages
-  zypper: name={{ item }} state=present
-  with_items: "{{ nginx_suse_pkg }}"
-  when: ansible_os_family == "Suse"
+  when: not nginx_official_repo
