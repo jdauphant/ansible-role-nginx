@@ -1,4 +1,8 @@
 ---
+- include: selinux.yml
+  when: ansible_selinux and ansible_selinux.status == "enabled"
+  tags: [packages,selinux,nginx]
+
 - include: nginx-official-repo.yml
   when: nginx_official_repo == True
   tags: [packages,nginx]

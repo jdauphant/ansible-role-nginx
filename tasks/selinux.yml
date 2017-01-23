@@ -1,0 +1,8 @@
+---
+- name: Install the selinux python module
+  package: name=libselinux-python state=present
+  when: ansible_os_family == "RedHat"
+
+- name: Install the selinux python module
+  package: name=python-selinux state=present
+  when: ansible_os_family == "Debian"
