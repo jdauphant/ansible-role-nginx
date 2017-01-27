@@ -12,4 +12,4 @@
   package: name={{ item }} state=present
   with_items: "{{ nginx_pkgs }}"
   environment: "{{ nginx_env }}"
-  when: not nginx_is_el|bool
+  when: not nginx_is_el|bool or not nginx_official_repo
