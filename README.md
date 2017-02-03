@@ -312,7 +312,7 @@ in the same file as its complementary upstream block.
 If you use this option:
 * _The hash **must** include a `template:` value, or the configuration task will fail._
 * _This role cannot check tha validity of your custom template.
-If you use this method, the conf file formtting provided by this role is unavailable,
+If you use this method, the conf file formatting provided by this role is unavailable,
 and it is up to you to provide a template with valid content and formatting for NGINX._
 
 Dependencies
