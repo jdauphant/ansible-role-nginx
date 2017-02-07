@@ -13,3 +13,27 @@
   with_items: "{{ nginx_pkgs }}"
   environment: "{{ nginx_env }}"
   when: not nginx_is_el|bool or not nginx_official_repo
+
+- name: Determine nginx version (Debian)
+  apt_madison:
+    name: "{{ nginx_pkgs[0] }}"
+  changed_when: False
+  register: nginx_version_result
+  when: ansible_os_family == 'Debian'
+
+- name: set nginx_installed_version
+  set_fact:
+    nginx_installed_version: "{{ nginx_version_result.versions | map(attribute='version') | first }}"
+  when: not (nginx_version_result.skipped | default(False) | bool)
+
+- name: Determine nginx version (RPM)
+  apt_madison:
+    name: "{{ nginx_pkgs[0] }}"
+  changed_when: False
+  register: nginx_version_result
+  when: ansible_os_family == 'RedHat' or ansible_distribution == 'SLES'
+
+- name: set nginx_installed_version
+  set_fact:
+    nginx_installed_version: "{{ nginx_version_result.versions | map(attribute='version') | first }}"
+  when: not (nginx_version_result.skipped | default(False) | bool)

@@ -34,7 +34,7 @@ http {
         include {{ nginx_conf_dir }}/sites-enabled/*;
 }
 
-{% if nginx_official_repo_mainline %}
+{% if nginx_official_repo_mainline or (nginx_installed_version | version_compare('1.9.0', '>=')) %}
 stream {
 
 {% for v in nginx_stream_params %}
