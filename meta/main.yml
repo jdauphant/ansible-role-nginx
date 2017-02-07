@@ -29,5 +29,6 @@ galaxy_info:
   categories:
    - web
 allow_duplicates: yes
-dependencies: []
+dependencies:
+  - atosatto.packages-extras
 
