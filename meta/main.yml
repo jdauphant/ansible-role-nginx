@@ -30,4 +30,5 @@ galaxy_info:
    - web
 allow_duplicates: yes
 dependencies: []
+version: 1.3.3
 
