@@ -81,6 +81,14 @@ nginx_configs:
       - gzip on
       - gzip_disable msie6
 
+# A list of hashes that define configuration snippets
+nginx_snippets:
+  error_pages:
+    - error_page 500 /http_errors/500.html
+    - error_page 502 /http_errors/502.html
+    - error_page 503 /http_errors/503.html
+    - error_page 504 /http_errors/504.html
+
 # A list of hashes that define user/password files
 nginx_auth_basic_files:
    demo:

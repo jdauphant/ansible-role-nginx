@@ -17,6 +17,14 @@
   notify:
    - reload nginx
 
+- name: Remove unwanted snippets
+  file:
+    path: "{{ nginx_conf_dir }}/snippets/{{ item[1] }}.conf"
+    state: absent
+  with_items: "{{ nginx_remove_snippets }}"
+  notify:
+   - reload nginx
+
 - name: Remove unwanted auth_basic_files
   file:
     path: "{{nginx_conf_dir}}/auth_basic/{{ item[1] }}"

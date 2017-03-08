@@ -27,6 +27,7 @@ script:
   - cat /etc/nginx/conf.d/upstream.conf
   - cat /etc/nginx/conf.d/geo.conf
   - cat /etc/nginx/conf.d/gzip.conf
+  - cat /etc/nginx/snippets/error_pages.conf
   - sudo cat /etc/nginx/auth_basic/demo
   - sudo nginx -t
 after_script:
