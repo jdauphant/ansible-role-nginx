@@ -12,6 +12,7 @@
     - "auth_basic"
     - "conf.d"
     - "conf.d/stream"
+    - "snippets"
 
 - name: Ensure log directory exist
   file:

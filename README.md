@@ -81,6 +81,14 @@ nginx_configs:
       - gzip on
       - gzip_disable msie6
 
+# A list of hashes that define configuration snippets
+nginx_snippets:
+  error_pages:
+    - error_page 500 /http_errors/500.html
+    - error_page 502 /http_errors/502.html
+    - error_page 503 /http_errors/503.html
+    - error_page 504 /http_errors/504.html
+
 # A list of hashes that define user/password files
 nginx_auth_basic_files:
    demo:
@@ -314,6 +322,35 @@ If you use this option:
 * _This role cannot check tha validity of your custom template.
 If you use this method, the conf file formatting provided by this role is unavailable,
 and it is up to you to provide a template with valid content and formatting for NGINX._
+
+10) Install Nginx, add 2 sites, use snippets to configure access controls
+```yaml
+---
+- hosts: all
+  roles:
+    - role: nginx
+      nginx_http_params:
+        - sendfile on
+        - access_log /var/log/nginx/access.log
+      nginx_snippets:
+        accesslist_devel:
+          - allow 192.168.0.0/24
+          - deny all
+      nginx_sites:
+        foo:
+           - listen 8080
+           - server_name localhost
+           - root /tmp/site1
+           - include snippets/accesslist_devel.conf
+           - location / { try_files $uri $uri/ /index.html; }
+           - location /images/ { try_files $uri $uri/ /index.html; }
+        bar:
+           - listen 9090
+           - server_name ansible
+           - root /tmp/site2
+           - location / { try_files $uri $uri/ /index.html; }
+           - location /images/ { try_files $uri $uri/ /index.html; }
+```
 
 Dependencies
 ------------
