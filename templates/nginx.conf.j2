@@ -9,6 +9,8 @@ pid        {{ nginx_pid_file }};
 
 worker_rlimit_nofile {{ nginx_worker_rlimit_nofile }};
 
+include {{ nginx_conf_dir }}/modules-enabled/*.conf;
+
 {% if nginx_extra_root_params is defined and nginx_extra_root_params is iterable %}
 {% for line in nginx_extra_root_params %}
 {{ line }};

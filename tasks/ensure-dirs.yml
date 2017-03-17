@@ -13,6 +13,8 @@
     - "conf.d"
     - "conf.d/stream"
     - "snippets"
+    - "modules-available"
+    - "modules-enabled"
 
 - name: Ensure log directory exist
   file:
