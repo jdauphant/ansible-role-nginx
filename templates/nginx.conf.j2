@@ -34,7 +34,7 @@ http {
         include {{ nginx_conf_dir }}/sites-enabled/*;
 }
 
-{% if nginx_official_repo_mainline %}
+{% if nginx_stream_params or nginx_stream_configs %}
 stream {
 
 {% for v in nginx_stream_params %}
