@@ -57,4 +57,4 @@
   with_dict: "{{ nginx_stream_configs }}"
   notify:
    - reload nginx
-  when: nginx_official_repo_mainline
+  when: nginx_stream_params is defined and nginx_stream_configs is defined
