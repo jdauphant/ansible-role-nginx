@@ -156,7 +156,7 @@ for details.
 # retain defaults and add additional `client_max_body_size` param
   roles:
     - role: jdauphant.nginx
-      nginx_http_params: "{{ nginx_http_params_defaults + my_extra_params }}"
+      nginx_http_params: "{{ nginx_http_default_params + my_extra_params }}"
 ```
 
 Note: Each site added is represented by a list of hashes, and the configurations
