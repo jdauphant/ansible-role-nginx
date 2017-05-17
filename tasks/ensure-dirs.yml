@@ -20,6 +20,6 @@
   file:
     path: "{{ nginx_log_dir }}"
     state: directory
-    owner: "{{nginx_user}}"
-    group: "{{nginx_group}}"
+    owner: "root"
+    group: "adm"
     mode: 0755
