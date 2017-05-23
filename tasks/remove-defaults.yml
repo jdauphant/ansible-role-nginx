@@ -1,8 +1,11 @@
 ---
 - name: Disable the default site
   file:
-    path: "{{nginx_conf_dir}}/sites-enabled/default"
+    path: "{{nginx_conf_dir}}/sites-enabled/{{item}}"
     state: absent
+  with_items:
+    - default
+    - default.conf
   notify:
   - reload nginx
 
