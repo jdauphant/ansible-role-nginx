@@ -4,7 +4,7 @@
     src: nginx.conf.j2
     dest: "{{ nginx_conf_dir }}/nginx.conf"
   notify:
-   - restart nginx
+    - restart nginx
 
 - name: Ensure auth_basic files created
   template:
@@ -22,7 +22,7 @@
   with_dict: "{{ nginx_sites }}"
   when: item.key not in nginx_remove_sites
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Create links for sites-enabled
   file:
@@ -32,7 +32,7 @@
   with_dict: "{{ nginx_sites }}"
   when: item.key not in nginx_remove_sites
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Create the configurations for independent config file
   template:
@@ -40,7 +40,7 @@
     dest: "{{ nginx_conf_dir }}/conf.d/{{ item.key }}.conf"
   with_dict: "{{ nginx_configs }}"
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Create configuration snippets
   template:
@@ -48,7 +48,7 @@
     dest: "{{ nginx_conf_dir }}/snippets/{{ item.key }}.conf"
   with_dict: "{{ nginx_snippets }}"
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Create the configurations for independent config file for streams
   template:
@@ -56,5 +56,5 @@
     dest: "{{ nginx_conf_dir }}/conf.d/stream/{{ item.key }}.conf"
   with_dict: "{{ nginx_stream_configs }}"
   notify:
-   - reload nginx
+    - reload nginx
   when: nginx_stream_params or nginx_stream_configs
