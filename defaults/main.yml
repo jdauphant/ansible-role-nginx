@@ -34,10 +34,10 @@ nginx_stream_params: []
 
 nginx_sites:
   default:
-     - listen 80 default_server
-     - server_name _
-     - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
-     - index index.html
+    - listen 80 default_server
+    - server_name _
+    - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
+    - index index.html
 nginx_remove_sites: []
 
 nginx_configs: {}

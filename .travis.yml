@@ -2,8 +2,8 @@
 language: python
 python: "2.7"
 before_install:
- - sudo apt-get update -qq
- - sudo apt-get install -qq python-apt python-pycurl
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq python-apt python-pycurl
 install:
   - pip install ansible ansible-lint
   - ansible --version
@@ -34,4 +34,4 @@ after_script:
   - ls -l /etc/nginx
   - ls -l /etc/nginx/*
 notifications:
-    webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
