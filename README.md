@@ -322,7 +322,7 @@ If you use this option:
 If you use this method, the conf file formatting provided by this role is unavailable,
 and it is up to you to provide a template with valid content and formatting for NGINX._
 
-10) Install Nginx, add 2 sites, use snippets to configure access controls
+## 10) Install Nginx, add 2 sites, use snippets to configure access controls
 ```yaml
 ---
 - hosts: all
