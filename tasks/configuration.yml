@@ -17,7 +17,7 @@
 
 - name: Create the configurations for sites
   template:
-    src: "{{ item.value.template | default('site.conf.j2') }}"
+    src: "{{ item.value.template | default(nginx_default_template) | default('site.conf.j2') }}"
     dest: "{{ nginx_conf_dir }}/sites-available/{{ item.key }}.conf"
   with_dict: "{{ nginx_sites }}"
   when: item.key not in nginx_remove_sites
