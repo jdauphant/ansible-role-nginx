@@ -1,0 +1,4 @@
+---
+nginx_conf_dir: /opt/local/etc/nginx
+nginx_user: www
+nginx_sites_default_root: /opt/local/www

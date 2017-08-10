@@ -26,6 +26,8 @@ galaxy_info:
         - 10.2
         - 10.3
         - 11.0
+        - 11.1
+    - name: SmartOS
   galaxy_tags:
     - web
 allow_duplicates: yes
