@@ -1,4 +1,11 @@
 ---
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "../vars/{{ ansible_os_family }}.yml"
+    - "../vars/empty.yml"
+  tags: [always]
+
 - include: selinux.yml
   when: ansible_selinux and ansible_selinux.status == "enabled"
   tags: [packages, selinux, nginx]
