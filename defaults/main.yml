@@ -12,7 +12,7 @@ keep_only_specified: False
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
-nginx_conf_dir: /etc/nginx # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.yml 
+nginx_conf_dir: /etc/nginx  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.yml
 nginx_default_site_template: "site.conf.j2"
 
 nginx_user: nginx  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
@@ -35,13 +35,13 @@ nginx_http_params: "{{ nginx_http_default_params }}"
 
 nginx_stream_params: []
 
-nginx_sites_default_root: /usr/share/nginx/html # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
+nginx_sites_default_root: /usr/share/nginx/html  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
 
 nginx_sites:
   default:
     - listen 80 default_server
     - server_name _
-    - root "{{ nginx_sites_default_root }}" 
+    - root "{{ nginx_sites_default_root }}"
     - index index.html
 nginx_remove_sites: []
 
