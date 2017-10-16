@@ -27,7 +27,7 @@
 
 - name: Remove unwanted auth_basic_files
   file:
-    path: "{{nginx_conf_dir}}/auth_basic/{{ item[1] }}"
+    path: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
     state: absent
   with_items: "{{ nginx_remove_auth_basic_files }}"
   notify:
