@@ -100,7 +100,7 @@ nginx_auth_basic_files:
 Examples
 ========
 
-## 1) Install nginx with HTTP directives of choice, but with no sites configured and no additionnal configuration:
+## 1) Install nginx with HTTP directives of choice, but with no sites configured and no additional configuration:
 
 ```yaml
 - hosts: all
