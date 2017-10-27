@@ -52,7 +52,7 @@
 
 - name: Create the configurations for independent config file for streams
   template:
-    src: config_stream.conf.j2
+    src: "{{ item.value.template | default('config_stream.conf.j2') }}"
     dest: "{{ nginx_conf_dir }}/conf.d/stream/{{ item.key }}.conf"
   with_dict: "{{ nginx_stream_configs }}"
   notify:
