@@ -12,7 +12,7 @@
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_sites.keys()
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Find config files
   shell: find {{nginx_conf_dir}}/conf.d -maxdepth 1 -type f -name '*.conf' -exec basename {} \;
@@ -27,4 +27,4 @@
   # 'item.conf' => 'item'
   when: item[:-5] not in nginx_configs.keys()
   notify:
-   - reload nginx
+    - reload nginx

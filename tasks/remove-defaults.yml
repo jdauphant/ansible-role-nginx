@@ -4,7 +4,7 @@
     path: "{{nginx_conf_dir}}/sites-enabled/default"
     state: absent
   notify:
-  - reload nginx
+    - reload nginx
 
 - name: Remove the default configuration
   file:
@@ -13,4 +13,4 @@
   when: >
     'default' not in nginx_configs.keys()
   notify:
-  - reload nginx
+    - reload nginx

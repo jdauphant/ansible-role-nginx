@@ -4,10 +4,10 @@
     path: "{{nginx_conf_dir}}/{{ item[0] }}/{{ item[1] }}.conf"
     state: absent
   with_nested:
-    - [ 'sites-enabled', 'sites-available']
+    - ['sites-enabled', 'sites-available']
     - "{{ nginx_remove_sites }}"
   notify:
-   - reload nginx
+    - reload nginx
 
 - name: Remove unwanted conf
   file:
@@ -15,12 +15,20 @@
     state: absent
   with_items: "{{ nginx_remove_configs }}"
   notify:
-   - reload nginx
+    - reload nginx
+
+- name: Remove unwanted snippets
+  file:
+    path: "{{ nginx_conf_dir }}/snippets/{{ item[1] }}.conf"
+    state: absent
+  with_items: "{{ nginx_remove_snippets }}"
+  notify:
+    - reload nginx
 
 - name: Remove unwanted auth_basic_files
   file:
-    path: "{{nginx_conf_dir}}/auth_basic/{{ item[1] }}"
+    path: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
     state: absent
   with_items: "{{ nginx_remove_auth_basic_files }}"
   notify:
-   - reload nginx
+    - reload nginx

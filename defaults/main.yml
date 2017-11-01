@@ -1,15 +1,5 @@
 ---
-nginx_redhat_pkg:
-  - nginx
-
-nginx_ubuntu_pkg:
-  - python-selinux
-  - nginx
-
-nginx_freebsd_pkg:
-  - nginx
-
-nginx_suse_pkg:
+nginx_pkgs:
   - nginx
 
 nginx_install_epel_repo: True
@@ -22,9 +12,10 @@ keep_only_specified: False
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
-nginx_conf_dir: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/etc/nginx{% else %}/etc/nginx{% endif %}"
+nginx_conf_dir: /etc/nginx # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.yml 
+nginx_default_site_template: "site.conf.j2"
 
-nginx_user: "{% if ansible_os_family == 'RedHat' or ansible_os_family == 'Suse' %}nginx{% elif ansible_os_family == 'Debian' %}www-data{% elif ansible_os_family == 'FreeBSD' %}www{% endif %}"
+nginx_user: nginx  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
@@ -32,35 +23,33 @@ nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
 nginx_worker_processes: "{% if ansible_processor_vcpus is defined %}{{ ansible_processor_vcpus }}{% else %}auto{% endif %}"
 nginx_worker_rlimit_nofile: 1024
 nginx_log_dir: "/var/log/nginx"
+nginx_log_user: "{% if ansible_os_family == 'Debian' %}root{% else %}{{nginx_user}}{% endif %}"
+nginx_log_group: "{% if ansible_os_family == 'Debian' %}adm{% else %}{{nginx_group}}{% endif %}"
 nginx_error_log_level: "error"
 
 nginx_extra_root_params: []
 nginx_events_params:
   - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}
 
-nginx_http_params:
-  - sendfile "on"
-  - tcp_nopush "on"
-  - tcp_nodelay "on"
-  - keepalive_timeout "65"
-  - access_log "{{nginx_log_dir}}/access.log"
-  - "error_log {{nginx_log_dir}}/error.log {{nginx_error_log_level}}"
-  - server_tokens off
-  - types_hash_max_size 2048
+nginx_http_params: "{{ nginx_http_default_params }}"
 
 nginx_stream_params: []
 
+nginx_sites_default_root: /usr/share/nginx/html # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
+
 nginx_sites:
   default:
-     - listen 80 default_server
-     - server_name _
-     - root "{% if ansible_os_family == 'FreeBSD' %}/usr/local/www/nginx-dist{% else %}/usr/share/nginx/html{% endif %}"
-     - index index.html
+    - listen 80 default_server
+    - server_name _
+    - root "{{ nginx_sites_default_root }}" 
+    - index index.html
 nginx_remove_sites: []
 
 nginx_configs: {}
+nginx_snippets: {}
 nginx_stream_configs: {}
 nginx_remove_configs: []
+nginx_remove_snippets: []
 
 nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []

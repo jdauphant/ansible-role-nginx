@@ -1,6 +1,7 @@
 #{{ ansible_managed }}
+
 server {
-{% for v in nginx_sites[item] %}
+{% for v in item.value %}
 {% if v.find('\n') != -1 %}
    {{v.replace("\n","\n   ")}}
 {% else %}
