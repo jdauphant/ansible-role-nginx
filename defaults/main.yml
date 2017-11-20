@@ -27,6 +27,9 @@ nginx_log_user: "{% if ansible_os_family == 'Debian' %}root{% else %}{{nginx_use
 nginx_log_group: "{% if ansible_os_family == 'Debian' %}adm{% else %}{{nginx_group}}{% endif %}"
 nginx_error_log_level: "error"
 
+nginx_conf_user: root
+nginx_conf_group: root
+
 nginx_extra_root_params: []
 nginx_events_params:
   - worker_connections {% if nginx_max_clients is defined %}{{nginx_max_clients}}{% else %}512{% endif %}

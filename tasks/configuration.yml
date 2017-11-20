@@ -10,8 +10,6 @@
   template:
     src: auth_basic.j2
     dest: "{{ nginx_conf_dir }}/auth_basic/{{ item.key }}"
-    owner: root
-    group: "{{ nginx_group }}"
     mode: 0750
   with_dict: "{{ nginx_auth_basic_files }}"
 

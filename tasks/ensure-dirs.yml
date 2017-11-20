@@ -3,8 +3,8 @@
   file:
     path: "{{nginx_conf_dir}}/{{ item }}"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ nginx_conf_user }}"
+    group: "{{ nginx_conf_group }}"
     mode: 0755
   with_items:
     - "sites-available"
