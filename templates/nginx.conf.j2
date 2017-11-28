@@ -29,11 +29,14 @@ http {
         include {{ nginx_conf_dir }}/mime.types;
         default_type application/octet-stream;
 {% for v in nginx_http_params %}
-    {% if v  in 'map' %}
-        {{ v }}
-    {% endif %}
         {{ v }};
 {% endfor %}
+
+{% if nginx_map_params %}
+{% for v in nginx_map_params %}
+        {{ v }}
+{% endfor %}
+{% endif %}
 
         include {{ nginx_conf_dir }}/conf.d/*.conf;
         include {{ nginx_conf_dir }}/sites-enabled/*;
