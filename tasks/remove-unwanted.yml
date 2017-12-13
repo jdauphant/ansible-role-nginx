@@ -11,7 +11,7 @@
 
 - name: Remove unwanted conf
   file:
-    path: "{{nginx_conf_dir}}/conf.d/{{ item[1] }}.conf"
+    path: "{{nginx_conf_dir}}/conf.d/{{ item }}.conf"
     state: absent
   with_items: "{{ nginx_remove_configs }}"
   notify:
@@ -19,7 +19,7 @@
 
 - name: Remove unwanted snippets
   file:
-    path: "{{ nginx_conf_dir }}/snippets/{{ item[1] }}.conf"
+    path: "{{ nginx_conf_dir }}/snippets/{{ item }}.conf"
     state: absent
   with_items: "{{ nginx_remove_snippets }}"
   notify:
