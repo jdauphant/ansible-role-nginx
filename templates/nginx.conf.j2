@@ -32,6 +32,12 @@ http {
         {{ v if "}" in v[-2:] else v+";" }}
 {% endfor %}
 
+{% if nginx_map_params %}
+{% for v in nginx_map_params %}
+        {{ v }}
+{% endfor %}
+{% endif %}
+
         include {{ nginx_conf_dir }}/conf.d/*.conf;
         include {{ nginx_conf_dir }}/sites-enabled/*;
 }
