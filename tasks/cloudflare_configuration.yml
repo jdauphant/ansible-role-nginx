@@ -1,0 +1,21 @@
+---
+- name: Get list of CloudFlare IPv4
+  uri:
+    url: https://www.cloudflare.com/ips-v4
+    return_content: yes
+  register: cloudflare_ipv4_list
+  tags: [configuration, nginx]
+
+- name: Get list of CloudFlare IPv6
+  uri:
+    url: https://www.cloudflare.com/ips-v6
+    return_content: yes
+  register: cloudflare_ipv6_list
+  tags: [configuration, nginx]
+
+- name: Create independent configuration for CloudFlare
+  template:
+    src: config_cloudflare.conf.j2
+    dest: "{{ nginx_conf_dir }}/conf.d/{{ nginx_cloudflare_configuration_name }}.conf"
+  notify:
+    - reload nginx

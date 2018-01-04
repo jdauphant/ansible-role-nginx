@@ -1,0 +1,19 @@
+#{{ ansible_managed }}
+
+{% if cloudflare_ipv4_list is defined %}
+{% for cidr in cloudflare_ipv4_list.content.split('\n') %}
+{% if cidr %}
+set_real_ip_from {{ cidr }};
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if cloudflare_ipv6_list is defined %}
+{% for cidr in cloudflare_ipv6_list.content.split('\n') %}
+{% if cidr %}
+set_real_ip_from {{ cidr }};
+{% endif %}
+{% endfor %}
+{% endif %}
+
+real_ip_header {{ nginx_cloudflare_real_ip_header }};
