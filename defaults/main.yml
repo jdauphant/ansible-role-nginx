@@ -49,6 +49,7 @@ nginx_sites:
     - root "{{ nginx_sites_default_root }}"
     - index index.html
 nginx_remove_sites: []
+nginx_disabled_sites: []
 
 nginx_configs: {}
 nginx_snippets: {}
