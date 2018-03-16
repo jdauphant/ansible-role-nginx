@@ -1,2 +1,2 @@
 ---
-nginx_user: www-data
+nginx_default_user: www-data

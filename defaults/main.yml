@@ -15,7 +15,7 @@ nginx_service_name: "{{nginx_binary_name}}"
 nginx_conf_dir: /etc/nginx # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.yml
 nginx_default_site_template: "site.conf.j2"
 
-nginx_user: nginx  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
+nginx_user: "{{nginx_default_user}}"
 nginx_group: "{{nginx_user}}"
 
 nginx_pid_file: '/var/run/{{nginx_service_name}}.pid'
