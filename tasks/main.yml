@@ -22,11 +22,11 @@
   tags: [configuration, nginx]
 
 - include: remove-defaults.yml
-  when: not keep_only_specified
+  when: not nginx_keep_only_specified
   tags: [configuration, nginx]
 
 - include: remove-extras.yml
-  when: keep_only_specified
+  when: nginx_keep_only_specified
   tags: [configuration, nginx]
 
 - include: remove-unwanted.yml
