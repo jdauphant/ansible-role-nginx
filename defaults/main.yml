@@ -7,7 +7,7 @@ nginx_install_epel_repo: True
 nginx_official_repo: False
 nginx_official_repo_mainline: False
 
-keep_only_specified: False
+nginx_keep_only_specified: "{{ keep_only_specified | default(False) }}"
 
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
