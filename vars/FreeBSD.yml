@@ -2,3 +2,4 @@
 nginx_conf_dir: /usr/local/etc/nginx
 nginx_user: www
 nginx_sites_default_root: /usr/local/www/nginx-dist
+nginx_conf_group: wheel

@@ -10,9 +10,8 @@
   template:
     src: auth_basic.j2
     dest: "{{ nginx_conf_dir }}/auth_basic/{{ item.key }}"
-    owner: root
-    group: "{{ nginx_group }}"
     mode: 0750
+    group: "{{ nginx_group }}"
   with_dict: "{{ nginx_auth_basic_files }}"
 
 - name: Create the configurations for sites
@@ -30,7 +29,7 @@
     src: "{{ nginx_conf_dir }}/sites-available/{{ item.key }}.conf"
     dest: "{{ nginx_conf_dir }}/sites-enabled/{{ item.key }}.conf"
   with_dict: "{{ nginx_sites }}"
-  when: item.key not in nginx_remove_sites
+  when: (item.key not in nginx_remove_sites) and (item.key not in nginx_disabled_sites)
   notify:
     - reload nginx
 
@@ -52,7 +51,7 @@
 
 - name: Create the configurations for independent config file for streams
   template:
-    src: config_stream.conf.j2
+    src: "{{ item.value.template | default('config_stream.conf.j2') }}"
     dest: "{{ nginx_conf_dir }}/conf.d/stream/{{ item.key }}.conf"
   with_dict: "{{ nginx_stream_configs }}"
   notify:
