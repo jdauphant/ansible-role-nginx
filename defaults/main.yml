@@ -61,6 +61,10 @@ nginx_auth_basic_files: {}
 nginx_remove_auth_basic_files: []
 
 nginx_daemon_mode: "on"
+# Set wether to start the service during the role run or keep it stopped
+nginx_start_service: true
+# Set wether enable Nginx service on boot or not
+nginx_start_at_boot: true
 
 nginx_set_real_ip_from_cloudflare: False
 nginx_cloudflare_real_ip_header: "CF-Connecting-IP" # See: https://support.cloudflare.com/hc/en-us/articles/200170706-How-do-I-restore-original-visitor-IP-with-Nginx-
