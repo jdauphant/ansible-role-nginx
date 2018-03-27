@@ -9,6 +9,9 @@ nginx_official_repo_mainline: False
 
 nginx_keep_only_specified: "{{ keep_only_specified | default(False) }}"
 
+# Whether load vars/{{ ansible_os_family }}.yml or not
+nginx_load_default_vars: true
+
 nginx_installation_type: "packages"
 nginx_binary_name: "nginx"
 nginx_service_name: "{{nginx_binary_name}}"
