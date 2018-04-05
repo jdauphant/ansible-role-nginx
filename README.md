@@ -11,7 +11,7 @@ sites can be added with configurations of your choice.
 Requirements
 ------------
 
-This role requires Ansible 2.0 or higher and platform requirements are listed
+This role requires Ansible 2.4 or higher and platform requirements are listed
 in the metadata file. (Some older version of the role support Ansible 1.4)
 For FreeBSD a working pkgng setup is required (see: https://www.freebsd.org/doc/handbook/pkgng-intro.html )
 

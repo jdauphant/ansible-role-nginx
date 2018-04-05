@@ -43,7 +43,7 @@ nginx_http_params: "{{ nginx_http_default_params }}"
 
 nginx_stream_params: []
 
-nginx_sites_default_root: /usr/share/nginx/html # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
+nginx_sites_default_root: /usr/share/nginx/html  # For this variable, a specific value for the OS can be apply in vars/{{ ansible_os_family }}.
 
 nginx_sites:
   default:

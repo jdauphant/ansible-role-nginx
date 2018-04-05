@@ -7,33 +7,33 @@
   when: nginx_load_default_vars
   tags: [always]
 
-- include: selinux.yml
+- import_tasks: selinux.yml
   when: ansible_selinux and ansible_selinux.status == "enabled"
   tags: [packages, selinux, nginx]
 
-- include: nginx-official-repo.yml
+- import_tasks: nginx-official-repo.yml
   when: nginx_official_repo == True
   tags: [packages, nginx]
 
-- include: installation.packages.yml
+- import_tasks: installation.packages.yml
   when: nginx_installation_type == "packages"
   tags: [packages, nginx]
 
-- include: ensure-dirs.yml
+- import_tasks: ensure-dirs.yml
   tags: [configuration, nginx]
 
-- include: remove-defaults.yml
+- import_tasks: remove-defaults.yml
   when: not nginx_keep_only_specified
   tags: [configuration, nginx]
 
-- include: remove-extras.yml
+- import_tasks: remove-extras.yml
   when: nginx_keep_only_specified
   tags: [configuration, nginx]
 
-- include: remove-unwanted.yml
+- import_tasks: remove-unwanted.yml
   tags: [configuration, nginx]
 
-- include: configuration.yml
+- import_tasks: configuration.yml
   tags: [configuration, nginx]
 
 - include: cloudflare_configuration.yml
