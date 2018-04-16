@@ -97,6 +97,11 @@ nginx_auth_basic_files:
 
 # Enable Real IP for CloudFlare requests
 nginx_set_real_ip_from_cloudflare: True
+
+# Enable Nginx Amplify
+nginx_amplify: true
+nginx_amplify_api_key: "your_api_key_goes_here"
+nginx_amplify_update_agent: true
 ```
 
 Examples
