@@ -42,6 +42,7 @@
 
 - include_tasks: amplify.yml
   when: nginx_amplify == True
+  tags: [configuration, nginx, amplify]
 
 - name: Start the nginx service
   service: name={{ nginx_service_name }} state={{nginx_start_service | ternary('started', 'stopped')}} enabled={{nginx_start_at_boot}}
