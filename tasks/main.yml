@@ -41,7 +41,7 @@
   tags: [configuration, nginx]
 
 - include_tasks: amplify.yml
-  when: nginx_amplify == True
+  when: nginx_amplify == true and (ansible_distribution in ['RedHat', 'CentOS', 'Debian', 'Amazon', 'Ubuntu'])
   tags: [amplify]
 
 - name: Start the nginx service
