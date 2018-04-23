@@ -17,7 +17,7 @@
     - name: Run Amplify Agent install.sh script
       command: "sh /tmp/install-amplify-agent.sh -y"
       environment:
-        API_KEY: "{{ amplify.api_key }}"
+        API_KEY: "{{ nginx_amplify_api_key }}"
       become: true
       become_user: root
       become_method: sudo
@@ -43,3 +43,4 @@
     state: started
     enabled: true
   tags: [service]
+
