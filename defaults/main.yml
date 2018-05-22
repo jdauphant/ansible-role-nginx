@@ -31,6 +31,17 @@ nginx_log_group: "{% if ansible_os_family == 'Debian' %}adm{% else %}{{nginx_gro
 nginx_log_perm: 0755
 nginx_error_log_level: "error"
 
+nginx_temp_dir: "/var/lib/nginx"
+nginx_temp_user: "{{ nginx_user }}"
+nginx_temp_group: "{{ nginx_group }}"
+nginx_temp_perm: 0755
+
+nginx_client_body_temp_path: "{{ nginx_temp_dir }}/client_body"
+nginx_fastcgi_temp_path: "{{ nginx_temp_dir }}/fastcgi"
+nginx_proxy_temp_path: "{{ nginx_temp_dir }}/proxy"
+nginx_scgi_temp_path: "{{ nginx_temp_dir }}/scgi"
+nginx_uwsgi_temp_path: "{{ nginx_temp_dir }}/uwsgi"
+
 nginx_conf_user: root
 nginx_conf_group: root
 nginx_dir_perm: 0755

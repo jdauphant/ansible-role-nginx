@@ -23,3 +23,18 @@
     owner: "{{nginx_log_user}}"
     group: "{{nginx_log_group}}"
     mode: "{{nginx_log_perm}}"
+
+- name: Ensure temp directories exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ nginx_temp_user }}"
+    group: "{{ nginx_temp_group }}"
+    mode: "{{ nginx_temp_perm }}"
+  with_items:
+    - "{{ nginx_temp_dir }}"
+    - "{{ nginx_client_body_temp_path }}"
+    - "{{ nginx_fastcgi_temp_path }}"
+    - "{{ nginx_proxy_temp_path }}"
+    - "{{ nginx_scgi_temp_path }}"
+    - "{{ nginx_uwsgi_temp_path }}"
