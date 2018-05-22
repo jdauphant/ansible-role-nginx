@@ -28,6 +28,13 @@ http {
 
         include {{ nginx_conf_dir }}/mime.types;
         default_type application/octet-stream;
+
+        client_body_temp_path {{ nginx_client_body_temp_path }};
+        fastcgi_temp_path {{ nginx_fastcgi_temp_path }};
+        proxy_temp_path {{ nginx_proxy_temp_path }};
+        scgi_temp_path {{ nginx_scgi_temp_path }};
+        uwsgi_temp_path {{ nginx_uwsgi_temp_path }};
+
 {% for v in nginx_http_params %}
         {{ v if "}" in v[-2:] else v+";" }}
 {% endfor %}
