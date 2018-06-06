@@ -44,6 +44,9 @@
   when: nginx_amplify == true and (ansible_distribution in ['RedHat', 'CentOS', 'Debian', 'Amazon', 'Ubuntu'])
   tags: [amplify, nginx]
 
+- include_tasks: systemd.yml
+  when: nginx_systemd_override == true
+
 - name: Start the nginx service
   service: name={{ nginx_service_name }} state={{nginx_start_service | ternary('started', 'stopped')}} enabled={{nginx_start_at_boot}}
   when: nginx_installation_type in nginx_installation_types_using_service and nginx_daemon_mode == "on"

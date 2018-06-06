@@ -78,3 +78,6 @@ nginx_amplify_api_key: ""
 nginx_amplify_update_agent: false
 nginx_amplify_script_url: "https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh"
 nginx_amplify_script_path: "/tmp/install-amplify-agent.sh"
+
+nginx_systemd_override: false
+nginx_systemd_nofile: '{{ nginx_worker_rlimit_nofile }}'
