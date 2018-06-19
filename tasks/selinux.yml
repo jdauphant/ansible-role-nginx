@@ -1,17 +1,7 @@
 ---
 - name: Install the selinux python module
-  package: name={{ item }} state=present
-  with_items:
-    - libselinux-python
-    - libsemanage-python
-  when: ansible_os_family == "RedHat"
-
-- name: Install the selinux python module
-  package: name={{ item }} state=present
-  with_items:
-    - python-selinux
-    - python-semanage
-  when: ansible_os_family == "Debian"
+  package: name={{ nginx_python_selinux_pkgs | default(omit)}} state=present
+  when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
 - name: Set SELinux boolean to allow nginx to set rlimit
   seboolean: name=httpd_setrlimit state=yes persistent=yes

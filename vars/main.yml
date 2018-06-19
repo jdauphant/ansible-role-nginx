@@ -13,3 +13,5 @@ nginx_http_default_params:
   - server_tokens off
   - access_log "{{nginx_log_dir}}/access.log"
   - error_log "{{nginx_log_dir}}/error.log" {{nginx_error_log_level}}
+
+nginx_python_selinux_pkgs: []
