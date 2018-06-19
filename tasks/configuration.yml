@@ -30,6 +30,7 @@
     dest: "{{ nginx_conf_dir }}/sites-enabled/{{ item.key }}.conf"
   with_dict: "{{ nginx_sites }}"
   when: (item.key not in nginx_remove_sites) and (item.key not in nginx_disabled_sites)
+  ignore_errors: "{{ ansible_check_mode }}"
   notify:
     - reload nginx
 

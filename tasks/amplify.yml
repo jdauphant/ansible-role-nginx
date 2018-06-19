@@ -43,4 +43,3 @@
     state: started
     enabled: true
   tags: [service]
-

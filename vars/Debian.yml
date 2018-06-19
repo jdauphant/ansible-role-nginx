@@ -1,2 +1,6 @@
 ---
 nginx_user: www-data
+
+nginx_python_selinux_pkgs:
+  - python-selinux
+  - python-semanage
