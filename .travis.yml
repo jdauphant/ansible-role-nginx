@@ -11,9 +11,9 @@ script:
   - ansible-lint tasks/main.yml
   - echo localhost > inventory
   - ansible-playbook -i inventory --syntax-check --list-tasks test/test.yml -e "role_name=ansible-role-nginx" -e "hosts_group=hosts_group"
-  - ansible-playbook -i inventory --connection=local --sudo -vvvv test/test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=localhost"
+  - ansible-playbook -i inventory --connection=local --become -vvvv test/test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=localhost"
   - >
-      ansible-playbook -i inventory --connection=local --sudo -vvvv test/test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=localhost"
+      ansible-playbook -i inventory --connection=local --become -vvvv test/test.yml -u root -e "role_name=ansible-role-nginx" -e "hosts_group=localhost"
       | grep -q 'changed=0.*failed=0'
       && (echo 'Idempotence test: pass' && exit 0)
       || (echo 'Idempotence test: fail' && exit 1)
