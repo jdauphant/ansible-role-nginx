@@ -277,7 +277,7 @@ Additional configurations are created in /etc/nginx/conf.d/
                proxy_set_header Host $myhost;
              }
 ```
-## 8) Example to use this role with my ssl-certs role to generate or copie ssl certificate ( https://galaxy.ansible.com/jdauphant/ssl-certs )
+## 8) Example to use this role with my ssl-certs role to generate or copy ssl certificate ( https://galaxy.ansible.com/jdauphant/ssl-certs )
 ```yaml
  - hosts: all
    roles:
