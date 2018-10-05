@@ -1,0 +1,17 @@
+---
+- name: Create systemd override directory
+  file:
+    path: "/etc/systemd/system/nginx.service.d"
+    state: directory
+
+- name: Create systemd override config
+  template:
+    src: systemd_override.conf.j2
+    dest: "/etc/systemd/system/nginx.service.d/override.conf"
+  register: systemd_override_conf
+  notify:
+    - restart nginx
+
+- name: systemctl daemon-reload
+  systemd: daemon_reload=true
+  when: systemd_override_conf.changed
