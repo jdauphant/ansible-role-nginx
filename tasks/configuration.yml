@@ -58,3 +58,22 @@
   notify:
     - reload nginx
   when: nginx_stream_params or nginx_stream_configs
+
+- name: Create configuration for modules
+  template:
+    src: module.conf.j2
+    dest: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
+  loop: "{{ nginx_module_configs }}"
+  notify:
+    - reload nginx
+
+- name: Create links for modules-enabled
+  file:
+    state: link
+    src: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
+    dest: "{{ nginx_conf_dir }}/modules-enabled/{{ item }}.conf"
+  with_items: "{{ nginx_module_configs }}"
+  when: (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
+    - reload nginx
