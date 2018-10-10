@@ -12,6 +12,8 @@
     state: absent
   notify:
     - reload nginx
+  when: >
+     'default' not in nginx_sites.keys()
 
 - name: Remove the default configuration
   file:
