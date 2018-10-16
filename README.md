@@ -103,6 +103,17 @@ nginx_set_real_ip_from_cloudflare: True
 nginx_amplify: true
 nginx_amplify_api_key: "your_api_key_goes_here"
 nginx_amplify_update_agent: true
+
+# Define modules (only for RHEL & CentOS).
+# available modules:.
+# - mod-http-geoip
+# - mod-http-image-filter
+# - mod-http-perl
+# - mod-http-xslt-filter
+# - mod-mail
+# - mod-stream
+nginx_module_configs:
+  - mod-http-geoip
 ```
 
 Examples
