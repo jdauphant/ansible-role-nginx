@@ -59,11 +59,23 @@
     - reload nginx
   when: nginx_stream_params or nginx_stream_configs
 
-- name: Create links for modules-enabled
+- name: Create configuration files in modules-available (only for nginx official repo or custom modules, Centos/RHEL/Debian/Ubuntu EPEL/APT repo packages have these config files already)
+  template:
+    src: module.conf.j2
+    dest: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
+  with_items: "{{ nginx_module_configs }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
+    - reload nginx
+  when:
+    - (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
+    - nginx_official_repo
+
+- name: Create links in modules-available to Centos/RHEL EPEL provided configuration files. Debian/Ubuntu APT provided packages already have these config files.
   file:
     state: link
     src: "/usr/share/nginx/modules/{{ item }}.conf"
-    dest: "{{ nginx_conf_dir }}/modules-enabled/{{ item }}.conf"
+    dest: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
   with_items: "{{ nginx_module_configs }}"
   ignore_errors: "{{ ansible_check_mode }}"
   notify:
@@ -71,5 +83,43 @@
   when:
     - (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
     - ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
-    - nginx_install_epel_repo
+    - not nginx_official_repo
+
+- name: Create links in our modules-available to Debian/Ubuntu APT provided config files.
+  file:
+    state: link
+    src: "/usr/share/nginx/modules-available/{{ item }}.conf"
+    dest: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
+  with_items: "{{ nginx_module_configs }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
+    - reload nginx
+  when:
+    - (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - not nginx_official_repo
+
+- name: Move out of the way any existing "50-" style links in modules-available, only for Debian/Ubuntu APT provided packages
+  command: "mv {{ nginx_conf_dir }}/modules-enabled/50-{{ item }}.conf {{ nginx_conf_dir }}/modules-enabled/50-{{ item }}.conf.renamedasnowmanaged"
+  args:
+    removes: "{{ nginx_conf_dir }}/modules-enabled/50-{{ item }}.conf"
+  with_items: "{{ nginx_module_configs }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
+    - reload nginx
+  when:
+    - (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - not nginx_official_repo
+
+- name: Create links in modules-enabled from modules-available
+  file:
+    state: link
+    src: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"
+    dest: "{{ nginx_conf_dir }}/modules-enabled/{{ item }}.conf"
+  with_items: "{{ nginx_module_configs }}"
+  when: (item not in nginx_remove_modules) and (item not in nginx_disabled_modules)
+  ignore_errors: "{{ ansible_check_mode }}"
+  notify:
+    - reload nginx
 

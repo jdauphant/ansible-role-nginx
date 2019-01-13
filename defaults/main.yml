@@ -57,6 +57,7 @@ nginx_disabled_sites: []
 nginx_module_configs: []
 nginx_remove_modules: []
 nginx_disabled_modules: []
+nginx_modules_location: /usr/lib64/nginx/modules # For this variable, a specific value for the OS can be applied in vars/{{ ansible_os_family }}.
 
 nginx_configs: {}
 nginx_snippets: {}
