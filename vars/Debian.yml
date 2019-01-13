@@ -4,3 +4,5 @@ nginx_user: www-data
 nginx_python_selinux_pkgs:
   - python-selinux
   - python-semanage
+
+nginx_modules_location: /usr/lib/nginx/modules
