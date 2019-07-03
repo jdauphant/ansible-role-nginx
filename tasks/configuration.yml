@@ -36,7 +36,7 @@
 
 - name: Create the configurations for independent config file
   template:
-    src: config.conf.j2
+    src: "{{ item.value.template | default('config.conf.j2') }}"
     dest: "{{ nginx_conf_dir }}/conf.d/{{ item.key }}.conf"
   with_dict: "{{ nginx_configs }}"
   notify:
