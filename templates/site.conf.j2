@@ -1,11 +1,11 @@
-#{{ ansible_managed }}
+{{ ansible_managed | comment }}
 
 server {
 {% for v in item.value %}
 {% if v.find('\n') != -1 %}
    {{v.replace("\n","\n   ")}}
 {% else %}
-   {% if v != "" %}{{ v.replace(";",";\n      ").replace(" {"," {\n      ").replace(" }"," \n   }\n") }}{% if v.find('{') == -1%};
+   {% if v != "" %}{{ v.replace(";",";\n      ").replace(" {"," {\n      ").replace(" }"," \n   }\n").replace("ansible_comment","#comment") }}{% if v.find('{') == -1%};
 {% endif %}{% endif %}{% endif %}
 {% endfor %}
 }

@@ -47,6 +47,7 @@ nginx_sites_default_root: /usr/share/nginx/html  # For this variable, a specific
 
 nginx_sites:
   default:
+    - ansible_comment just show comment in site config file
     - listen 80 default_server
     - server_name _
     - root "{{ nginx_sites_default_root }}"
