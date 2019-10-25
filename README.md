@@ -1,6 +1,9 @@
 nginx
 =====
 
+## @jdauphant : This Role is community managed, I will not develop anymore myself on it but I can review and accept pull request (Reviewers on PR are welcomed too)
+
+
 This role installs and configures the nginx web server. The user can specify
 any http configuration parameters they wish to apply their site. Any number of
 sites can be added with configurations of your choice.
