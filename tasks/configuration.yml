@@ -1,4 +1,20 @@
 ---
+
+- name: Check if nginx mime.types file exists
+  stat:
+    path: "{{ nginx_conf_dir }}/mime.types"
+  register: nginx_mime_types_file
+  notify:
+    - reload nginx
+
+- name: Ensure mime.types file exists if it was missing
+  get_url:
+    url: https://raw.githubusercontent.com/nginx/nginx/master/conf/mime.types
+    dest: "{{ nginx_conf_dir }}/mime.types"
+  when: nginx_mime_types_file.stat.exists == False
+  notify:
+    - reload nginx
+  
 - name: Copy the nginx configuration file
   template:
     src: nginx.conf.j2
@@ -122,4 +138,3 @@
   ignore_errors: "{{ ansible_check_mode }}"
   notify:
     - reload nginx
-
