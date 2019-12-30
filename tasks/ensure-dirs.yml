@@ -1,11 +1,11 @@
 ---
 - name: Create the directories for site specific configurations
   file:
-    path: "{{nginx_conf_dir}}/{{ item }}"
+    path: "{{ nginx_conf_dir }}/{{ item }}"
     state: directory
     owner: "{{ nginx_conf_user }}"
     group: "{{ nginx_conf_group }}"
-    mode: "{{nginx_dir_perm}}"
+    mode: "{{ nginx_dir_perm }}"
   with_items:
     - "sites-available"
     - "sites-enabled"
@@ -20,6 +20,6 @@
   file:
     path: "{{ nginx_log_dir }}"
     state: directory
-    owner: "{{nginx_log_user}}"
-    group: "{{nginx_log_group}}"
-    mode: "{{nginx_log_perm}}"
+    owner: "{{ nginx_log_user }}"
+    group: "{{ nginx_log_group }}"
+    mode: "{{ nginx_log_perm }}"

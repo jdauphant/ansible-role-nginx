@@ -11,10 +11,10 @@
   get_url:
     url: https://raw.githubusercontent.com/nginx/nginx/master/conf/mime.types
     dest: "{{ nginx_conf_dir }}/mime.types"
-  when: nginx_mime_types_file.stat.exists == False
+  when: not nginx_mime_types_file.stat.exists|bool
   notify:
     - reload nginx
-  
+
 - name: Copy the nginx configuration file
   template:
     src: nginx.conf.j2
@@ -75,7 +75,10 @@
     - reload nginx
   when: nginx_stream_params or nginx_stream_configs
 
-- name: Create configuration files in modules-available (only for nginx official repo or custom modules, Centos/RHEL/Debian/Ubuntu EPEL/APT repo packages have these config files already)
+- name: |
+    Create configuration files in modules-available (only for nginx official
+    repo or custom modules, Centos/RHEL/Debian/Ubuntu EPEL/APT repo packages
+    have these config files already)
   template:
     src: module.conf.j2
     dest: "{{ nginx_conf_dir }}/modules-available/{{ item }}.conf"

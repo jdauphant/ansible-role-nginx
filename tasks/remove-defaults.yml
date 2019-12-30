@@ -1,14 +1,14 @@
 ---
 - name: Disable the default site
   file:
-    path: "{{nginx_conf_dir}}/sites-enabled/default"
+    path: "{{ nginx_conf_dir }}/sites-enabled/default"
     state: absent
   notify:
     - reload nginx
 
 - name: Disable the default site (on newer nginx versions)
   file:
-    path: "{{nginx_conf_dir}}/sites-enabled/default.conf"
+    path: "{{ nginx_conf_dir }}/sites-enabled/default.conf"
     state: absent
   notify:
     - reload nginx
@@ -17,7 +17,7 @@
 
 - name: Remove the default configuration
   file:
-    path: "{{nginx_conf_dir}}/conf.d/default.conf"
+    path: "{{ nginx_conf_dir }}/conf.d/default.conf"
     state: absent
   when: >
     'default' not in nginx_configs.keys()

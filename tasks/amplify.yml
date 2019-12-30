@@ -27,15 +27,19 @@
         path: "{{ nginx_amplify_script_path }}"
         state: absent
 
-  when: amplify_agent_installed.failed == true
+  when: amplify_agent_installed.failed|bool
   tags: [configuration, packages]
 
 - name: Update Amplify Agent if already installed and update flag is enabled
   package:
     name: nginx-amplify-agent
     state: latest
-  when: amplify_agent_installed.failed == false and nginx_amplify_update_agent == true
-  tags: [packages]
+  when:
+    - not amplify_agent_installed.failed|bool
+    - nginx_amplify_update_agent|bool
+  tags:
+    - packages
+    - skip_ansible_lint  # latest package version
 
 - name: Verify Amplify agent is up and running
   service:
