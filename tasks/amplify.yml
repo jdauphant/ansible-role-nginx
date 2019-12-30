@@ -37,7 +37,9 @@
   when:
     - not amplify_agent_installed.failed|bool
     - nginx_amplify_update_agent|bool
-  tags: [packages]
+  tags:
+    - packages
+    - skip_ansible_lint  # latest package version
 
 - name: Verify Amplify agent is up and running
   service:
