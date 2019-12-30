@@ -1,6 +1,7 @@
 ---
 
-- include_vars: "{{ item }}"
+- name: include OS dependent vars
+  include_vars: "{{ item }}"
   with_first_found:
     - "../vars/{{ ansible_os_family }}.yml"
     - "../vars/empty.yml"
