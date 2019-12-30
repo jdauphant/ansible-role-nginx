@@ -12,7 +12,7 @@
   tags: [packages, selinux, nginx]
 
 - include_tasks: nginx-official-repo.yml
-  when: nginx_official_repo == True
+  when: nginx_official_repo|bool
   tags: [packages, nginx]
 
 - include_tasks: installation.packages.yml
@@ -37,11 +37,11 @@
   tags: [configuration, nginx]
 
 - include_tasks: cloudflare_configuration.yml
-  when: nginx_set_real_ip_from_cloudflare == True
+  when: nginx_set_real_ip_from_cloudflare|bool
   tags: [configuration, nginx]
 
 - include_tasks: amplify.yml
-  when: nginx_amplify == true and (ansible_distribution in ['RedHat', 'CentOS', 'Debian', 'Amazon', 'Ubuntu'])
+  when: nginx_amplify|bool and (ansible_distribution in ['RedHat', 'CentOS', 'Debian', 'Amazon', 'Ubuntu'])
   tags: [amplify, nginx]
 
 - name: Start the nginx service

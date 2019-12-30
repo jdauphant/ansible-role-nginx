@@ -11,7 +11,7 @@
   get_url:
     url: https://raw.githubusercontent.com/nginx/nginx/master/conf/mime.types
     dest: "{{ nginx_conf_dir }}/mime.types"
-  when: nginx_mime_types_file.stat.exists == False
+  when: not nginx_mime_types_file.stat.exists|bool
   notify:
     - reload nginx
 
