@@ -14,7 +14,7 @@
   when: nginx_mime_types_file.stat.exists == False
   notify:
     - reload nginx
-  
+
 - name: Copy the nginx configuration file
   template:
     src: nginx.conf.j2
