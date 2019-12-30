@@ -1,6 +1,6 @@
 ---
 - name: Install the selinux python module
-  package: name={{ nginx_python_selinux_pkgs | default(omit)}} state=present
+  package: name={{ nginx_python_selinux_pkgs | default(omit) }} state=present
   when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
 
 - name: Set SELinux boolean to allow nginx to set rlimit

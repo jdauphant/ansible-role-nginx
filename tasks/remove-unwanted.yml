@@ -1,7 +1,7 @@
 ---
 - name: Remove unwanted sites
   file:
-    path: "{{nginx_conf_dir}}/{{ item[0] }}/{{ item[1] }}.conf"
+    path: "{{ nginx_conf_dir }}/{{ item[0] }}/{{ item[1] }}.conf"
     state: absent
   with_nested:
     - ['sites-enabled', 'sites-available']
@@ -11,7 +11,7 @@
 
 - name: Remove unwanted conf
   file:
-    path: "{{nginx_conf_dir}}/conf.d/{{ item }}.conf"
+    path: "{{ nginx_conf_dir }}/conf.d/{{ item }}.conf"
     state: absent
   with_items: "{{ nginx_remove_configs }}"
   notify:
@@ -27,7 +27,7 @@
 
 - name: Remove unwanted auth_basic_files
   file:
-    path: "{{nginx_conf_dir}}/auth_basic/{{ item }}"
+    path: "{{ nginx_conf_dir }}/auth_basic/{{ item }}"
     state: absent
   with_items: "{{ nginx_remove_auth_basic_files }}"
   notify:
