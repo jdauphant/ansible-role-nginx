@@ -1,7 +1,7 @@
 nginx
 =====
 
-## @jdauphant : This Role is community managed, I will not develop anymore myself on it but I can review and accept pull request (Reviewers on PR are welcomed too)
+## @jdauphant : I don't have time to manage anymore this role. Don't hesitate to fork and made your own version.
 
 
 This role installs and configures the nginx web server. The user can specify
