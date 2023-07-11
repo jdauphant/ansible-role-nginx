@@ -1,0 +1,8 @@
+---
+nginx_user: www-data
+
+nginx_python_selinux_pkgs:
+  - python3-selinux
+  - python3-semanage
+
+nginx_modules_location: /usr/lib/nginx/modules
